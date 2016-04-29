@@ -1,6 +1,6 @@
 ---
-title: "Untitled"
-author: "Johannes Schulz-Knappe"
+title: "Electoral Success of the Alternative for Germany"
+author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
 date: "April 29, 2016"
 output: ioslides_presentation
 ---
