@@ -1,12 +1,17 @@
 ---
-title: "What explains the electoral success of the Alternative for Germany?"
-subtitle: "An analysis of the March 2016 elections in three German states"
+title: "What explains the electoral success of the AfD?"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
-date: | 
+date: |
   | May 1, 2016
   | Hertie School of Governance
-output: 
-  ioslides_presentation
+output:
+  beamer_presentation:
+    colortheme: beaver
+    fonttheme: structuresmallcapsserif
+    slide_level: 2
+    theme: Warsaw
+  ioslides_presentation: default
+subtitle: An analysis of the March 2016 state elections Germany
 bibliography:
 - Library.bib
 - Packages1.bib
@@ -64,7 +69,7 @@ load("Data.Rda") # Load data file
 
 - March 2016: **15.1%** in Baden-Württemberg, **12.6%** in Rhineland-Palatinate, **24.3%** in Saxony-Anhalt
 
-- "a landslide"[@Zeit2016]
+- "**a landslide**"[@Zeit2016]
 
 - The AfD has **"arrived in German mainstream politics"** [@Spiegel2016]
 
@@ -121,9 +126,9 @@ summary_labels <- c('Vote share of AfD in 2016', 'Vote turnout in 2011',
 
 
 stargazer(Data[4:16],
-covariate.labels = summary_labels,
-font.size = 'small',
-type="latex", header = FALSE)
+          covariate.labels = summary_labels,
+          font.size = 'small',
+          type="latex", header = FALSE)
 ```
 
 ## Correlation Matrix
@@ -138,7 +143,23 @@ stargazer(correlation.matrix,
           type="latex", header = F)
 ```       
 
-## The corelation of GDP per capita and AfD's vote share
+## Distribution of AfD vote share
+
+```{r bar, echo=F, warning=F, message=F, error=F, results='hide', fig.width=13}
+ggplot(Data) +
+  geom_bar(aes(y = vote.AfD, 
+               x = reorder(district.name, -vote.AfD),
+               colour = state), 
+           stat = "identity") +
+  ylab("AfD vote share") +
+  xlab("Districts of BW, RP, and SA") +
+  ggtitle("Vote share of AfD in the districts of BW, RP, and SA") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+
+## The corelation of GDP per capita and AfD vote share
 
 ``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) + 
@@ -149,7 +170,7 @@ ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) +
   theme_bw()
 ```
 
-## The corelation of unemployment and AfD's vote share
+## The corelation of unemployment and AfD vote share
 
 ``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) + 
@@ -160,7 +181,7 @@ ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) +
   theme_bw()
 ```
 
-## The corelation of no. of refugees and AfD's vote share
+## The corelation of no. of refugees and AfD vote share
 
 ``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD)) + 
@@ -189,40 +210,30 @@ var_labels <- c('GDP per capita', 'Unemployment rate', 'Number of refugees',
                 'High school ratio', 'No degree ratio', '(Intercept)')
 
 stargazer::stargazer(reg1, reg2, reg3, reg4,
-          omit = 'as.factor*', 
-          omit.stat = c('f', 'ser'), # to nicely fits on the page
-          out.header = F,
-          title = 'Determinants of electoral success for the Alternative for Germany',
-          dep.var.labels = 'Vote share of AfD',
-          covariate.labels = var_labels,
-          label = 'AfD_voteshare',
-          add.lines = list(c('District FE?', rep('NO', 4))),
-          font.size = 'small',
-          type="latex", header = F)
+                     omit = 'as.factor*', 
+                     omit.stat = c('f', 'ser'), # to nicely fits on the page
+                     out.header = F,
+                     title = 'Determinants of electoral success for the Alternative for Germany',
+                     dep.var.labels = 'Vote share of AfD',
+                     covariate.labels = var_labels,
+                     label = 'AfD_voteshare',
+                     add.lines = list(c('District FE?', rep('NO', 4))),
+                     font.size = 'small',
+                     type="latex", header = F)
 ```
 
 ## Future research
 
-```{r bar, echo=F, warning=F, message=F, error=F, results='hide', fig.width=13}
-ggplot(Data) +
-  geom_bar(aes(y = vote.AfD, 
-               x = reorder(district.name, -vote.AfD),
-               colour = state), 
-           stat = "identity") +
-  ylab("AfD vote share") +
-  xlab("Districts of BW, RP, and SA") +
-  ggtitle("Vote share of AfD in the districts of BW, RP, and SA") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90))
-```
+- Analysis of all state elections in Germany where the AfD is present in order to have more observations
 
-
-- Analysis of all state elections in Germany where the AfD is present
-
+- Access more recent data on refugee numbers
+ 
 - Additional variables, like "immigrants per district"
 
 - Spatial analysis
 
-## Thank you!
+## Q&A
+
+**Thank you for your attention**
 
 ## References
