@@ -218,8 +218,10 @@ stargazer::stargazer(reg1, reg2, reg3, reg4,
                      covariate.labels = var_labels,
                      label = 'AfD_voteshare',
                      add.lines = list(c('District FE?', rep('NO', 4))),
-                     font.size = 'small',
-                     type="latex", header = F)
+                     font.size = 'tiny', # make the font tiny
+                     float = F, df = F, # add float and df to F
+                     type="latex", header = F, 
+                     no.space=TRUE) # add no.space=TRUE to remove space in betwen line. 
 ```
 
 ## Future research
