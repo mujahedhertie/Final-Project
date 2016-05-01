@@ -23,10 +23,10 @@ As of May 01, 2016, this repository contains the work done in previous assignmen
 
 ### Documents in the repository
 
-Besides this readme, there are 9 main files in the repository
+Besides this readme, there are 8 main files in the repository
 
 - [Presentation.Rmd](https://github.com/mujahedhertie/Final-Project/blob/master/Presentation.Rmd) is the markup document that contains our presentation
-- [Presentation.html](https://github.com/mujahedhertie/Final-Project/blob/master/Presentation.html) and [Presentation.pdf](https://github.com/mujahedhertie/Final-Project/blob/master/Presentation.pdf) are the output files of our presentation, in html and pdf
+- [Presentation.pdf](https://github.com/mujahedhertie/Final-Project/blob/master/Presentation.pdf) is the pdf output file of our presentation
 - [Data.Rda](https://github.com/mujahedhertie/Final-Project/blob/master/Data.Rda) is our data set. It contains 15 variables on 94 observations.
 - [1_Data.R](https://github.com/mujahedhertie/Final-Project/blob/master/1_Data.R) is the R file that contains all our data gathering, cleaning, and merging work. Run this file to update the dataset.
 - [2_Analysis.R](https://github.com/mujahedhertie/Final-Project/blob/master/2_Analysis.R) is the R file that separately contains all analysis we performed on the dataset

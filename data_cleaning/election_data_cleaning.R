@@ -1,9 +1,9 @@
 #######################################################################
 # MPP-E1180: Introduction to Collaborative Social Science Data Analysis
-# Assignment03
+# Collaborative Research Project
 # Election Data Cleaning
 # Johannes Schulz-Knappe 
-# Update 27 April 2016
+# Update 01 May 2016
 # Hertie School of Governance
 #######################################################################
 

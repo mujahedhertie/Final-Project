@@ -1,17 +1,17 @@
 ---
-title: "What explains the electoral success of the AfD?"
+title: "What Explains the Electoral Success of the AfD?"
+subtitle: "An Analysis of the March 2016 State Elections in Germany"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
 date: |
-  | May 1, 2016
+  | May 2, 2016
   | Hertie School of Governance
 output:
   beamer_presentation:
+    theme: Warsaw
     colortheme: beaver
     fonttheme: structuresmallcapsserif
     slide_level: 2
-    theme: Warsaw
-  ioslides_presentation: default
-subtitle: An analysis of the March 2016 state elections Germany
+header-includes: \widowpenalties 1 150
 bibliography:
 - Library.bib
 - Packages1.bib
@@ -65,9 +65,9 @@ load("Data.Rda") # Load data file
 
 ## Introduction
 
-- Within less than three years of being founded, the **Alternative for Germany** (AfD) has achieved extraordinary vote share in the General election of 2013, and the European Parliament election of 2014 [@arzheimer2015afd]
+- Within less than three years of being founded, the **Alternative for Germany** (AfD) has achieved extraordinary vote share in the General election of 2013 and the European Parliament election of 2014 [@arzheimer2015afd]
 
-- March 2016: **15.1%** in Baden-WÃ¼rttemberg, **12.6%** in Rhineland-Palatinate, **24.3%** in Saxony-Anhalt
+- March 2016: **15.1%** in Baden-Württemberg, **12.6%** in Rhineland-Palatinate, **24.3%** in Saxony-Anhalt
 
 - "**a landslide**"[@Zeit2016]
 
@@ -77,23 +77,24 @@ load("Data.Rda") # Load data file
 
 - AfD can be described as a "**functional equivalent for a right-wing populist party** in a country where right-wing politics are strongly stigmatised" [@Berbuir2015]
 
-- @Ivarsflaten2008 : Successful RRWP parties almost always use **anti-immigration rhethorics**
+- Successful right-wing populist parties almost always use **anti-immigration rhethorics** [@Ivarsflaten2008]
 
-- @swank2003globalization : **Volume of refugees**, level of **immigration**, domestic **tax burden**, and strong presence of **left-wing parties** positively influences right wing-populist electoral success
+- **Volume of refugees**, level of **immigration**, domestic **tax burden**, and strong presence of **left-wing parties** positively influences right wing-populist electoral success [@swank2003globalization]
 
 - AfD was especially successful in mobilizing former **non-voters** and the **unemployed** [@Spiegel2016]
 
 
 ## Research Question
 
-*"What explains the recent electoral success of the AfD in the different districts of Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
+*"What explains the recent electoral success of the AfD in the different districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
 
-- What structural factors correlate with the success
-- Same factors as found for other western European countries?
+- What structural factors correlate with the success?
 
-## Election data
+- Are those the same characteristics found for other western European countries?
 
-*Source: @BWStateOffice, @RPStateOffice, @SAStateOffice*
+## Election Data
+
+*Source: State Statistical Offices of @BWStateOffice, @RPStateOffice, and @SAStateOffice*
 
 Variable | Name in dataset | Description |
 --------------------|-----------------|-------------------------------|
@@ -101,15 +102,15 @@ Dependent Variable (DV) | **vote.AfD** | The vote share of the Alternative for G
 Independent Variable 1 (IV1) | **lag.turnout** | Overall voter turnout of the previous state election                        |
 IV2, IV3, IV4, IV5, IV6 | **lag.CDU**, **lag.Greens**, **lag.SPD**, **lag.FDP**, **lag.Linke** | The vote share of political parties in the previous state election (CDU, SPD, Greens, FDP, and Linke) |
 
-## Structural data
+## Structural Data
 
-*Source: @DESTATIS*
+*Source: Federal Statistical Office [@DESTATIS]*
 
 Variable | Name in dataset | Description |
 --------------------|-----------------|-------------------------------|
 IV7 | **abitur.ratio**| Ratio of school leavers per district with general qualification for university entrance (Abitur) |
 IV8 | **nodegree.ratio** | Ratio of school leavers per district with no school degree |
-IV9 | **GDP.cap** | Gross domestic product (GDP) per capita | 
+IV9 | **GDP.capita** | Gross domestic product (GDP) per capita / 1000 | 
 IV10 | **unemp.rate** | Unemployment rate in the district |
 IV11 | **n.refugees** | Number of asylum seekers per district |
 
@@ -121,9 +122,8 @@ summary_labels <- c('Vote share of AfD in 2016', 'Vote turnout in 2011',
                     'Vote share of CDU in 2011', 'Vote share of Greens in 2011', 
                     'Vote share of SPD in 2011', 'Vote share of FDP in 2011', 
                     'Vote share of Linke in 2011', 'High school ratio', 
-                    'No degree ratio', 'GDP per capita', 
+                    'No degree ratio', 'GDP per capita / 1000', 
                     'Unemployment rate', 'Number of refugees')
-
 
 stargazer(Data[4:16],
           covariate.labels = summary_labels,
@@ -137,42 +137,44 @@ stargazer(Data[4:16],
 ```{r corr, echo=F, warning=F, message=F, error=F, results='asis'}
 correlation.matrix <- cor(Data[, c("vote.AfD","lag.CDU",
                                    "lag.SPD","GDP.capita",
-                                   "unempl.rate","n.refugees",
+                                   "unempl.rate",
                                    "abitur.ratio")])
 stargazer(correlation.matrix,
-          title= 'Correlation matrix of all the variables',
+          title= 'Correlation matrix of some variables',
           font.size = 'tiny',
-          type="latex", header = F, no.space=TRUE)
+          digits = 2,
+          type="latex", 
+          header = FALSE, 
+          no.space = FALSE)
 ```       
 
-## Distribution of AfD vote share
+## Distribution of AfD Vote Share
 
 ```{r bar, echo=F, warning=F, message=F, error=F, results='hide', fig.width=13}
 ggplot(Data) +
   geom_bar(aes(y = vote.AfD, 
                x = reorder(district.name, -vote.AfD),
-               colour = state), 
+               fill = state), 
            stat = "identity") +
-  ylab("AfD vote share") +
-  xlab("Districts of BW, RP, and SA") +
-  ggtitle("Vote share of AfD in the districts of BW, RP, and SA") +
+  ylab("AfD vote share (in %)") +
+  xlab("Districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony Anhalt") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90))
 ```
 
 
-## The corelation of GDP per capita and AfD vote share
+## The Correlation of GDP per Capita and AfD Vote Share
 
 ``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) + 
-  xlab("GDP per capita per district (in Euro)") +
+  xlab("GDP per capita per district / 1000") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_bw()
 ```
 
-## The corelation of unemployment and AfD vote share
+## The Correlation of Unemployment and AfD Vote Share
 
 ``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) + 
@@ -183,7 +185,7 @@ ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) +
   theme_bw()
 ```
 
-## The corelation of no. of refugees and AfD vote share
+## The Correlation of Number of Refugees and AfD Vote Share
 
 ``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD)) + 
@@ -194,7 +196,7 @@ ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD)) +
   theme_light()
 ```
 
-## Inferential statistics
+## Inferential Statistics
 
 ``` {r regout, echo = F, message = F, results = "asis", error=F}
 reg1 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees, data = Data)
@@ -206,10 +208,11 @@ reg4 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
              nodegree.ratio, data = Data)
 
-var_labels <- c('GDP per capita', 'Unemployment rate', 'Number of refugees', 
+var_labels <- c('GDP per capita / 1000', 'Unemployment rate', 'Number of refugees', 
                 'Vote share of CDU in 2011 election',
                 'Vote share of SPD in 2011 election',
-                'High school ratio', 'No degree ratio', '(Intercept)')
+                'Voter turnout in 2011 election',
+                'Abitur ratio', 'No degree ratio')
 
 stargazer::stargazer(reg1, reg2, reg3, reg4,
                      omit = 'as.factor*', 
@@ -219,25 +222,28 @@ stargazer::stargazer(reg1, reg2, reg3, reg4,
                      dep.var.labels = 'Vote share of AfD',
                      covariate.labels = var_labels,
                      label = 'AfD_voteshare',
-                     add.lines = list(c('District FE?', rep('NO', 4))),
+                     add.lines = list(c('District FE', rep('NO', 4))),
                      font.size = 'tiny', # make the font tiny
                      float = F, df = F, # add float and df to F
                      type="latex", header = F, 
-                     no.space=TRUE) # add no.space=TRUE to remove space in betwen line. 
+                     no.space = T,
+                     digits = 2) # add no.space=TRUE to remove space in betwen line. 
 ```
 
-## Future research
+## Limitations and Future Research
 
-- Analysis of all state elections in Germany where the AfD is present in order to have more observations
+- Extend analysis on all state elections in Germany where the AfD has participated in order to increase observations
 
 - Access more recent data on refugee numbers
  
-- Additional variables, like "immigrants per district"
+- Include additional variables, like "immigration"
 
-- Spatial analysis
+- Create interaction models 
+
+- Use beta regression as dependent variable is [0, 1] bounded
 
 ## Q&A
 
-**Thank you for your attention**
+**Thank you for your attention!**
 
-## References
+## References {.allowframebreaks}

@@ -1,9 +1,9 @@
 #######################################################################
 # MPP-E1180: Introduction to Collaborative Social Science Data Analysis
-# Assignment03
+# Collaborative Research Project
 # Structural Data Cleaning 
 # Johannes Schulz-Knappe
-# Update 27 April 2016
+# Update 01 May 2016
 # Hertie School of Governance
 #######################################################################
 
@@ -49,6 +49,7 @@ gdp$ID <- as.numeric(as.character(gdp$ID))  # Convert ID to numeric
 gdp$GDP.capita <- as.character(gdp$GDP.capita)  # convert GDP.capita to character
 gdp$GDP.capita <- gsub(",", ".", x = gdp$GDP.capita)  # replace commas with periods
 gdp$GDP.capita <- as.numeric(gdp$GDP.capita)  # convert GDP.capita to numeric
+gdp$GDP.capita <- gdp$GDP.capita/1000 # divide by thousand for better readability
 
 # Remove raw data from environment
 rm(gdp_raw)
