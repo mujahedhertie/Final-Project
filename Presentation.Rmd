@@ -1,35 +1,227 @@
 ---
 title: "Electoral Success of the Alternative for Germany"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
-date: "April 29, 2016"
-output: ioslides_presentation
+date: "May 1, 2016"
+output: 
+  ioslides_presentation
+  beamer_presentation
+
+bibliography: Library.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## R Markdown
+``` {r initialisation, echo = F, message = F, warning = F}
+options(repos=c(CRAN="http://mirrors.softliste.de/cran/"))
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+rm(list = ls())
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+load <- c("repmis", "magrittr", "dplyr", "xtable", "texreg", 
+          "stargazer", "readxl", "ggplot2", "grid", 
+          "captioner", "foreign", "rms", "Zelig", 
+          "knitr", "GGally", "gridExtra", 
+          "zoo", "rugarch")
 
-## Slide with Bullets
+loaded <- lapply(load, function(x) {
+  if(!require(x, character.only = T)) {
+    install.packages(x)
+    require(x, character.only = T)
+  }
+})
+rm(load, loaded)
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+figcap <- captioner(prefix = "Figure", 
+                    auto_space = TRUE, levels = 1, type = NULL)
+tablecap <- captioner(prefix = "Table", 
+                      auto_space = TRUE, levels = 1, type = NULL)
 
-## Slide with R Output
 
-```{r cars, echo = TRUE}
-summary(cars)
+# Set the working directory:
+
+# Create list of commonly used working directories (update, if needed)
+possible_dir <- c('C:/Users/Johannes SK/Dropbox/Studium/Spring2016/CollaborativeResearch/Final-Project',
+                  'C:/Users/User/Documents/GitHub/Final-Project')
+
+set_valid_wd(possible_dir) # Set to first valid directory in the possible_dir vector
+rm(possible_dir) # remove possible_dir vector
+
 ```
 
-## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+```{r data, echo=F, warning=F, message=F, error=F}
+load("Data.Rda") # Load data file
 ```
 
+## Introduction
+
+- Within less than three years of being founded, the **Alternative for Germany** (AfD) has achieved extraordinary vote share in the General election of 2013, and the European Parliament election of 2014 [@arzheimer2015afd]
+
+- March 13 state elections: 15.1% in Baden-Württemberg, 12.6% in Rhineland-Palatinate, 24.3% in Saxony-Anhalt. [@BWStateOffice; @RPStateOffice; @SAStateOffice]
+
+- "a landslide"[@Zeit2016]
+
+- The AfD has "arrived in German mainstream politics" [@Spiegel2016]
+
+## Existing Research
+
+- AfD can be described as a "functional equivalent for a right-wing populist party in a country where right-wing politics are strongly stigmatised" [@Berbuir2015]
+
+- @Ivarsflaten2008 : Successful RRWP parties almost always use **anti-immigration rhethorics**
+
+- @swank2003globalization : **Volume of refugees**, level of **immigration**, domestic **tax burden**, and strong presence of **left-wing parties** positively influences right wing-populist electoral success
+
+- AfD was especially successful in mobilizing former **non-voters** and the **unemployed** [@Spiegel2016]
+
+
+## Project Outline
+
+### Research Question
+
+*"What explains the recent electoral success of the AfD in the different districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
+
+
+## Election data
+
+*Source: @BWStateOffice, @RPStateOffice, @SAStateOffice*
+
+Variable | Name in dataset | Description |
+--------------------|-----------------|-------------------------------|
+Dependent Variable (DV) | **vote.AfD** | The vote share of the Alternative for Germany in the current state election |
+Independent Variable 1 (IV1) | **lag.turnout** | Overall voter turnout of the previous state election                        |
+IV2, IV3, IV4, IV5, IV6 | **lag.CDU**, **lag.Greens**, **lag.SPD**, **lag.FDP**, **lag.Linke** | The vote share of political parties in the previous state election (CDU, SPD, Greens, FDP, and Linke) |
+
+## Structural data
+
+*Source: @DESTATIS*
+
+Variable | Name in dataset | Description |
+--------------------|-----------------|-------------------------------|
+IV7 | **abitur.ratio**| Ratio of school leavers per district with general qualification for university entrance (Abitur) |
+IV8 | **nodegree.ratio** | Ratio of school leavers per district with no school degree |
+IV9 | **GDP.cap** | Gross domestic product (GDP) per capita | 
+IV10 | **unemp.rate** | Unemployment rate in the district |
+IV11 | **n.refugees** | Number of asylum seekers per district |
+
+### Final Dataset
+
+94 observations on 12 variables
+
+## Descriptive Statistics
+
+```{r sumstat, echo=F, warning=F, message=F, error=F, results='asis'}
+summary_labels <- c('Vote share of AfD in 2016', 'Vote turnout in 2011', 
+                    'Vote share of CDU in 2011', 'Vote share of Greens in 2011', 
+                    'Vote share of SPD in 2011', 'Vote share of FDP in 2011', 
+                    'Vote share of Linke in 2011', 'High school ratio', 
+                    'No degree ratio', 'GDP per capita', 
+                    'Unemployment rate', 'Number of refugees')
+
+
+stargazer(Data[4:16],
+covariate.labels = summary_labels,
+font.size = 'small',
+type="latex", header = FALSE)
+```
+
+## Correlation Matrix
+
+```{r corr, echo=F, warning=F, message=F, error=F, results='asis'}
+correlation.matrix <- cor(Data[, c("vote.AfD","lag.CDU",
+                                   "lag.SPD","GDP.capita",
+                                   "unempl.rate","n.refugees",
+                                   "abitur.ratio")])
+stargazer(correlation.matrix,
+          font.size = 'small',
+          type="latex", header = F)
+```       
+
+## GDP per capita correlation
+
+``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
+ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) + 
+  xlab("GDP per capita per district (in Euro)") +
+  ylab("AfD vote share (in %)") +
+  geom_point(aes(colour = state)) + 
+  geom_smooth() + 
+  theme_bw()
+```
+
+## The effect of unemployment
+
+``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
+ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) + 
+  xlab("Unemployment rate per district (in %)") +
+  ylab("AfD vote share (in %)") +
+  geom_point(aes(colour = state)) + 
+  geom_smooth() + 
+  theme_bw()
+```
+
+## The effect of refugee numbers
+
+``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
+ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD)) + 
+  xlab("Number of refugees per district") +
+  ylab("AfD vote share (in %)") +
+  geom_point(aes(colour = state)) + 
+  geom_smooth() + 
+  theme_light()
+```
+
+## Inferential statistics
+
+``` {r regout, echo = F, message = F, results = "asis", error=F}
+reg1 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees, data = Data)
+reg2 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees + lag.CDU + 
+             lag.SPD + lag.turnout, data = Data)
+reg3 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees + 
+             abitur.ratio + nodegree.ratio, data = Data)
+reg4 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
+           + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
+             nodegree.ratio, data = Data)
+
+var_labels <- c('GDP per capita', 'Unemployment rate', 'Number of refugees', 
+                'Vote share of CDU in 2011 election',
+                'Vote share of SPD in 2011 election',
+                'High school ratio', 'No degree ratio', '(Intercept)')
+
+stargazer::stargazer(reg1, reg2, reg3, reg4,
+          omit = 'as.factor*', 
+          omit.stat = c('f', 'ser'), # to nicely fits on the page
+          out.header = F,
+          title = 'Determinants of electoral success for the Alternative for Germany',
+          dep.var.labels = 'Vote share of AfD',
+          covariate.labels = var_labels,
+          label = 'AfD_voteshare',
+          add.lines = list(c('District FE?', rep('NO', 4))),
+          font.size = 'small',
+          type="latex", header = F)
+```
+
+## Future research
+
+```{r bar, echo=F, warning=F, message=F, error=F, results='hide', fig.width=13}
+ggplot(Data) +
+  geom_bar(aes(y = vote.AfD, 
+               x = reorder(district.name, -vote.AfD),
+               colour = state), 
+           stat = "identity") +
+  ylab("AfD vote share") +
+  xlab("Districts of BW, RP, and SA") +
+  ggtitle("Vote share of AfD in the districts of BW, RP, and SA") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
+```
+
+
+- Analysis of all state elections in Germany where the AfD is present
+
+- Additional variables, like "immigrants per district"
+
+- Spatial analysis
+
+## Thank you!
+
+## References
