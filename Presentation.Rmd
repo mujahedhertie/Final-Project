@@ -139,8 +139,10 @@ correlation.matrix <- cor(Data[, c("vote.AfD","lag.CDU",
                                    "unempl.rate","n.refugees",
                                    "abitur.ratio")])
 stargazer(correlation.matrix,
-          font.size = 'small',
-          type="latex", header = F)
+          title= 'Correlation matrix of all the variables',
+          font.size = 'tiny',
+           float = F, df = F,
+          type="latex", header = F, no.space=TRUE)
 ```       
 
 ## Distribution of AfD vote share
