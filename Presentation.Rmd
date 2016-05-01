@@ -137,7 +137,7 @@ stargazer(correlation.matrix,
           type="latex", header = F)
 ```       
 
-## GDP per capita correlation
+## The corelation of GDP per capita and AfD's vote share
 
 ``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) + 
@@ -148,7 +148,7 @@ ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) +
   theme_bw()
 ```
 
-## The effect of unemployment
+## The corelation of unemployment and AfD's vote share
 
 ``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) + 
@@ -159,7 +159,7 @@ ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) +
   theme_bw()
 ```
 
-## The effect of refugee numbers
+## The corelation of no. of refugees and AfD's vote share
 
 ``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD)) + 
