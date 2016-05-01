@@ -1,12 +1,16 @@
 ---
-title: "Electoral Success of the Alternative for Germany"
+title: "What explains the electoral success of the Alternative for Germany?"
+subtitle: "An analysis of the March 2016 elections in three German states"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
-date: "May 1, 2016"
+date: | 
+  | May 1, 2016
+  | Hertie School of Governance
 output: 
   ioslides_presentation
-  beamer_presentation
-
-bibliography: Library.bib
+bibliography:
+- Library.bib
+- Packages1.bib
+- Packages2.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -58,15 +62,15 @@ load("Data.Rda") # Load data file
 
 - Within less than three years of being founded, the **Alternative for Germany** (AfD) has achieved extraordinary vote share in the General election of 2013, and the European Parliament election of 2014 [@arzheimer2015afd]
 
-- March 13 state elections: 15.1% in Baden-Württemberg, 12.6% in Rhineland-Palatinate, 24.3% in Saxony-Anhalt. [@BWStateOffice; @RPStateOffice; @SAStateOffice]
+- March 2016: **15.1%** in Baden-Württemberg, **12.6%** in Rhineland-Palatinate, **24.3%** in Saxony-Anhalt
 
 - "a landslide"[@Zeit2016]
 
-- The AfD has "arrived in German mainstream politics" [@Spiegel2016]
+- The AfD has **"arrived in German mainstream politics"** [@Spiegel2016]
 
 ## Existing Research
 
-- AfD can be described as a "functional equivalent for a right-wing populist party in a country where right-wing politics are strongly stigmatised" [@Berbuir2015]
+- AfD can be described as a "**functional equivalent for a right-wing populist party** in a country where right-wing politics are strongly stigmatised" [@Berbuir2015]
 
 - @Ivarsflaten2008 : Successful RRWP parties almost always use **anti-immigration rhethorics**
 
@@ -75,12 +79,12 @@ load("Data.Rda") # Load data file
 - AfD was especially successful in mobilizing former **non-voters** and the **unemployed** [@Spiegel2016]
 
 
-## Project Outline
-
-### Research Question
+## Research Question
 
 *"What explains the recent electoral success of the AfD in the different districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
 
+- What structural factors correlate with the success
+- Same factors as found for other western European countries?
 
 ## Election data
 
@@ -104,9 +108,6 @@ IV9 | **GDP.cap** | Gross domestic product (GDP) per capita |
 IV10 | **unemp.rate** | Unemployment rate in the district |
 IV11 | **n.refugees** | Number of asylum seekers per district |
 
-### Final Dataset
-
-94 observations on 12 variables
 
 ## Descriptive Statistics
 
