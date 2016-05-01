@@ -5,12 +5,12 @@ date: |
   | May 1, 2016
   | Hertie School of Governance
 output:
+  ioslides_presentation: default
   beamer_presentation:
     colortheme: beaver
     fonttheme: structuresmallcapsserif
     slide_level: 2
     theme: Warsaw
-  ioslides_presentation: default
 subtitle: An analysis of the March 2016 state elections Germany
 bibliography:
 - Library.bib
@@ -127,7 +127,8 @@ summary_labels <- c('Vote share of AfD in 2016', 'Vote turnout in 2011',
 
 stargazer(Data[4:16],
           covariate.labels = summary_labels,
-          font.size = 'small',
+          font.size = 'tiny',
+          title= 'Summary statistics of the covariates',
           type="latex", header = FALSE)
 ```
 
@@ -141,7 +142,6 @@ correlation.matrix <- cor(Data[, c("vote.AfD","lag.CDU",
 stargazer(correlation.matrix,
           title= 'Correlation matrix of all the variables',
           font.size = 'tiny',
-           float = F, df = F,
           type="latex", header = F, no.space=TRUE)
 ```       
 
