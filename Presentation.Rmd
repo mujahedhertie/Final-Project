@@ -167,7 +167,7 @@ ggplot(Data) +
 
 ``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) + 
-  xlab("GDP per capita per district / 1000") +
+  xlab("GDP per capita per district / 1000 (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
@@ -178,7 +178,7 @@ ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD)) +
 
 ``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) + 
-  xlab("Unemployment rate per district (in %)") +
+  xlab("Unemployment rate per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
@@ -189,7 +189,7 @@ ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD)) +
 
 ``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
 ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD)) + 
-  xlab("Number of refugees per district") +
+  xlab("Number of refugees per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
@@ -207,14 +207,17 @@ reg3 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees +
 reg4 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
              nodegree.ratio, data = Data)
+reg5 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
+           + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
+             nodegree.ratio + state, data = Data)
 
 var_labels <- c('GDP per capita / 1000', 'Unemployment rate', 'Number of refugees', 
                 'Vote share of CDU in 2011 election',
                 'Vote share of SPD in 2011 election',
                 'Voter turnout in 2011 election',
-                'Abitur ratio', 'No degree ratio')
+                'Abitur ratio', 'No degree ratio', 'state')
 
-stargazer::stargazer(reg1, reg2, reg3, reg4,
+stargazer::stargazer(reg1, reg2, reg3, reg4, reg5,
                      omit = 'as.factor*', 
                      omit.stat = c('f', 'ser'), # to nicely fits on the page
                      out.header = F,

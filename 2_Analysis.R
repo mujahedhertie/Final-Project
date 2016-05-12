@@ -215,15 +215,19 @@ reg3 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees +
 reg4 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
              nodegree.ratio, data = Data)
+reg5 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
+           + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
+             nodegree.ratio + state, data = Data)
 
 # Assign variable labels
-var_labels <- c('GDP per capita', 'Unemployment rate', 'No. of Refugees', 
+var_labels <- c('GDP per capita / 1000', 'Unemployment rate', 'Number of Refugees', 
             'Vote share of CDU in 2011 election',
             'Vote share of SPD in 2011 election',
-            'High School Ratio', 'University Degree ratio', '(Intercept)')
+            'Voter turnout in 2011 election',
+            'Abitur Ratio', 'No degree ratio', 'state')
 
 # Create regression table
-stargazer::stargazer(reg1, reg2, reg3, reg4,
+stargazer::stargazer(reg1, reg2, reg3, reg4, reg5,
           omit = 'as.factor*', 
           omit.stat = c('f', 'ser'), # to nicely fits on the page
           out.header = F,
