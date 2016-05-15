@@ -2,7 +2,7 @@ GENESIS-Tabelle: Temporär
 Arbeitslose nach ausgewählten Personengruppen sowie;;;;;;;;;;;;;;;
 Arbeitslosenquoten - Jahresdurchschnitt -;;;;;;;;;;;;;;;
 regionale Tiefe: Kreise und krfr. Städte;;;;;;;;;;;;;;;
-Arbeitsmarktstatistik der Bundesagentur für Arbeit;;;;;;;;;;;;;;;
+Arbeitsmarktstatistik der Bundesanstalt für Arbeit;;;;;;;;;;;;;;;
 ;;;Arbeitslose;Arbeitslose;Arbeitslose;Arbeitslose;Arbeitslose;Arbeitslose;Arbeitslose;Arbeitslosenquote bez. abh. zivile Erwerbspers.;Arbeitslosenquote bez. auf alle zivile Erwerbsp.;Arbeitslosenquote bez. auf alle zivile Erwerbsp.;Arbeitslosenquote bez. auf alle zivile Erwerbsp.;Arbeitslosenquote bez. auf alle zivile Erwerbsp.;Arbeitslosenquote bez. auf alle zivile Erwerbsp.
 ;;;;Ausländer;schwerbehindert;15 bis unter 20 Jahre;15 bis unter 25 Jahre;55 bis unter 65 Jahre;langzeitarbeitslos;;;Männer;Frauen;Ausländer;15 bis unter 25 Jahre
 ;;;Anzahl;Anzahl;Anzahl;Anzahl;Anzahl;Anzahl;Anzahl;Prozent;Prozent;Prozent;Prozent;Prozent;Prozent
@@ -39,7 +39,7 @@ Arbeitsmarktstatistik der Bundesagentur für Arbeit;;;;;;;;;;;;;;;
 2014;03158;      Wolfenbüttel, Landkreis;3684;417;162;49;337;827;1434;6,7;6,0;6,1;5,9;17,8;5,9
 2014;032;    Hannover, Stat. Region;83598;17650;3997;1585;8344;15559;33330;.;.;.;.;.;.
 2014;03241;      Region Hannover, Landkreis;49287;12963;2416;871;4570;8744;20209;9,2;8,2;8,6;7,9;21,1;7,7
-2014;03241001;      Hannover, Landeshauptstadt;28682;8749;1349;473;2464;4699;12325;.;.;.;.;.;.
+2014;03241001;      Hannover, Landeshauptstadt;.;.;.;.;.;.;.;.;.;.;.;.;.
 2014;03251;      Diepholz, Landkreis;5266;687;215;103;602;1056;1630;5,1;4,6;4,5;4,7;12,9;4,9
 2014;03252;      Hameln-Pyrmont, Landkreis;6006;980;328;134;702;1178;2462;8,8;7,9;8,4;7,3;19,7;9,1
 2014;03254;      Hildesheim, Landkreis;10700;1449;445;199;1094;1986;4390;8,3;7,4;7,9;6,9;21,4;7,2
@@ -101,7 +101,7 @@ Arbeitsmarktstatistik der Bundesagentur für Arbeit;;;;;;;;;;;;;;;
 2014;05315;      Köln, Kreisfreie Stadt;53054;17133;2872;641;3578;8527;23397;10,6;9,6;10,0;9,2;18,8;6,7
 2014;05316;      Leverkusen, Kreisfreie Stadt;7139;1925;456;105;739;1224;2812;9,5;8,6;8,5;8,6;18,5;8,7
 2014;05334;      Städteregion Aachen (einschl. Stadt Aachen);25398;5903;1501;418;2336;4265;11109;9,8;8,9;9,1;8,5;18,6;6,9
-2014;05334002;      Aachen, krfr. Stadt;12065;3399;616;172;949;1946;5817;.;.;.;.;.;.
+2014;05334002;      Aachen, krfr. Stadt;.;.;.;.;.;.;.;.;.;.;.;.;.
 2014;05354;      Aachen, Kreis;-;-;-;-;-;-;-;-;-;-;-;-;-
 2014;05358;      Düren, Kreis;11105;1987;594;242;1323;1667;5062;9,0;8,2;8,0;8,4;19,7;8,9
 2014;05362;      Rhein-Erft-Kreis;18462;4409;1143;266;1756;3674;8108;8,5;7,6;7,6;7,7;17,2;7,0
@@ -365,7 +365,7 @@ Arbeitsmarktstatistik der Bundesagentur für Arbeit;;;;;;;;;;;;;;;
 2014;09780;      Oberallgäu, Landkreis;2541;354;232;48;279;652;507;3,5;3,1;3,0;3,2;7,1;2,6
 2014;10;  Saarland;36911;6204;2106;661;3486;7224;14114;7,8;7,2;7,2;7,2;18,0;6,3
 2014;10041;      Saarbrücken, Regionalverband;16034;3069;921;291;1521;2774;6692;10,6;9,8;9,9;9,6;20,1;8,6
-2014;10041100;      Saarbrücken, Landeshauptstadt;10325;2134;540;182;935;1735;4401;.;.;.;.;.;.
+2014;10041100;      Saarbrücken, Landeshauptstadt;.;.;.;.;.;.;.;.;.;.;.;.;.
 2014;10042;      Merzig-Wadern, Landkreis;2789;386;164;55;275;598;892;5,6;5,2;5,4;5,0;13,4;4,3
 2014;10043;      Neunkirchen, Landkreis;5702;825;291;132;628;1167;2038;8,9;8,2;8,0;8,4;21,8;8,5
 2014;10044;      Saarlouis, Landkreis;6240;1140;363;90;530;1214;2379;6,6;6,1;5,9;6,3;15,8;4,6
@@ -416,7 +416,7 @@ Arbeitsmarktstatistik der Bundesagentur für Arbeit;;;;;;;;;;;;;;;
 2014;13074;      Landkreis Nordwestmecklenburg;7754;257;407;128;653;1889;3183;10,2;9,3;9,8;8,7;15,8;9,0
 2014;13075;      Landkreis Vorpommern-Greifswald;16322;459;896;197;1237;3896;6096;14,8;13,6;14,7;12,3;20,3;11,5
 2014;13076;      Landkreis Ludwigslust-Parchim;9598;281;602;140;798;2245;3577;9,2;8,4;8,6;8,1;14,9;8,5
-2014;14;  Freistaat Sachsen;187494;9607;10865;2042;13357;48317;73124;9,9;8,8;9,1;8,6;19,7;7,5
+2014;14;  Sachsen;187494;9607;10865;2042;13357;48317;73124;9,9;8,8;9,1;8,6;19,7;7,5
 2014;141;    Chemnitz, Regierungsbezirk;-;-;-;-;-;-;-;-;-;-;-;-;-
 2014;14161;      Chemnitz, Kreisfreie Stadt;-;-;-;-;-;-;-;-;-;-;-;-;-
 2014;14166;      Plauen, Kreisfreie Stadt;-;-;-;-;-;-;-;-;-;-;-;-;-
@@ -571,5 +571,5 @@ möglich.)
 _____
 (C)opyright Dieses Angebot der Statistischen Ämter des Bundes und der
 Länder ist lizensiert unter der Datenlizenz Deutschland -
-Namensnennung - Version 2.0. Düsseldorf, 2016.
-Stand: 12.05.2016 / 19:42:28
+Namensnennung - Version 2.0. Düsseldorf, 2015.
+Stand: 08.11.2015 / 22:32:38
