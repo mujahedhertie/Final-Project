@@ -127,3 +127,20 @@ names(debt) <- c("ID", "public.debt")
 
 # Remove raw data from environment
 rm(debt_raw)
+
+
+
+## 2.7 District type
+
+# Keep necessary columns
+# type <- size_raw[, c(2, 3)]
+
+# Create type column
+# type$district.type <- 0
+  
+#   grep('Kreisfreie Stadt', type$district.name)
+  
+#   rp1 <- rp1[-c(1, grep('VG$', rp1$district.name)), ]   
+
+  
+grep('Kreisfreie Stadt', type$district.name)

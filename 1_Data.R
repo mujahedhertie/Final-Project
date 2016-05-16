@@ -99,7 +99,7 @@ rm(refugee)
 rm(debt)
 
 # Divide vote.AfD by 100 in order to enable beta regression
-Data$vote.AfD <- Data$vote.AfD/100
+Data$vote.AfD.prcnt <- Data$vote.AfD/100
 
 # Save Data as file in repository
 save(Data, file = "Data_new.Rda")
