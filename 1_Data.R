@@ -82,17 +82,21 @@ source("data_cleaning/structural_data_cleaning.R")
 #-----------------------------------------#
 
 # Merge the data into the final data frame
-Data <- merge(data.election, edu, "ID")
-Data <- merge(Data, gdp, "ID")
+Data <- merge(data.election, size, "ID")
+Data <- merge(Data, edu, "ID")
 Data <- merge(Data, unemp, "ID")
+Data <- merge(Data, gdp, "ID")
 Data <- merge(Data, refugee, "ID")
+Data <- merge(Data, debt, "ID")
 
 # Remove used data frames
 rm(data.election)
+rm(size)
 rm(edu)
-rm(gdp)
 rm(unemp)
+rm(gdp)
 rm(refugee)
+rm(debt)
 
 # Save Data as file in repository
-save(Data, file = "Data.Rda")
+save(Data, file = "Data_new.Rda")

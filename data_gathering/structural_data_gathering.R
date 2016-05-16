@@ -3,7 +3,7 @@
 # Collaborative Research Project
 # Structural Data Gathering 
 # Johannes Schulz-Knappe
-# Update 15 May 2016
+# Update 16 May 2016
 # Hertie School of Governance
 #######################################################################
 
@@ -24,7 +24,7 @@
 # Federal Statistical Office does not provide an API.
 
 # We use the data files 171-01-4 (District Size), 192-71-4 (Education), 659-71-4 (Unemployment),
-# 426-71-4 (GDP per capita), 335-31-4 (number of asylum seekers), and 358-61-4 (Public Debt).
+# 426-71-4 (GDP per Capita), 335-31-4 (Number of Asylum Seekers), and 358-61-4 (Public Debt).
 # The downloaded csv files are stored under '/data_raw' in the working directory
 
 
@@ -39,7 +39,7 @@ size_raw <- read.csv("data_raw/171-01-4.csv",
                      col.names = c("date", "district.ID", "district.name", 
                                    "space"),
                      skip = 7,
-                     nrows = 525,
+                     nrows = 524,
                      dec=",")
 
 ## 2.2 Education
@@ -50,7 +50,7 @@ edu_raw <- read.csv("data_raw/192-71-4.csv",
                     sep = ";", 
                     na.strings = c("-","."),
                     skip = 11,
-                    nrows = 525,
+                    nrows = 524,
                     dec=",")
 
 ## 2.3 Unemployment rate
@@ -73,9 +73,9 @@ unemp_raw <- read.csv("data_raw/659-71-4.csv",
 gdp_raw <- read.csv("data_raw/426-71-4.csv",
                     header = FALSE, 
                     sep = ";", 
-                    na.strings = c("-","."),
-                    skip = 9,
-                    nrows = 525)
+                    na.strings = c("-", ".", "..."),
+                    skip = 10,
+                    nrows = 524)
 
 ## 2.5 Number of asylum seekers
 
@@ -86,8 +86,8 @@ refugee_raw <- read.csv("data_raw/335-31-4.csv",
                         header = FALSE, 
                         sep = ";", 
                         na.strings = c("-","."),
-                        skip = 8,
-                        nrows = 525,
+                        skip = 9,
+                        nrows = 524,
                         dec = ",")
 
 ## 2.6 District public debt
@@ -102,6 +102,6 @@ debt_raw <- read.csv("data_raw/358-61-4.csv",
                      col.names = c("date", "district.ID", "district.name", 
                                    "public.debt", "public.loan.debt", "indep.inst.debt",
                                    "local.hospital.debt"),
-                     skip = 6,
-                     nrows = 525,
+                     skip = 7,
+                     nrows = 524,
                      dec = ",")

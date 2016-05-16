@@ -3,7 +3,7 @@
 # Collaborative Research Project
 # Structural Data Cleaning 
 # Johannes Schulz-Knappe
-# Update 15 May 2016
+# Update 16 May 2016
 # Hertie School of Governance
 #######################################################################
 
@@ -63,9 +63,9 @@ rm(edu_raw)
 
 
 ## 2.3 Unemployment rate
-View(unemp_raw)
+
 # Keep necessary columns
-unemp <- unemp_raw[, c(2, 11)]
+unemp <- unemp_raw[, c(2, 12)]
 
 # Delete unnecessary rows
 unemp <- unemp[-c(1:9), ]
@@ -84,10 +84,10 @@ rm(unemp_raw)
 
 
 
-## 2.3 GDP per capita
+## 2.4 GDP per capita
 
 # Delete unnecessary columns
-gdp <- gdp_raw[, -c(1, 3)]
+gdp <- gdp_raw[, c(2, 6)]
 
 # Rename columns
 names(gdp) <- c("ID", "GDP.capita")
@@ -104,37 +104,26 @@ rm(gdp_raw)
 
 
 
-### 2.4 Unemployment rate
+## 2.5 Number of asylum seekers
 
 # Keep necessary columns
-unemp <- unemp_raw[, c(2, 11)]
-
-# Delete unnecessary rows
-unemp <- unemp[-c(1:9), ]
-
-# Rename columns
-names(unemp) <- c("ID", "unempl.rate")
-
-# Convert variables
-unemp$ID <- as.numeric(as.character(unemp$ID))  # convert ID to numeric
-unemp$unempl.rate <- as.character(unemp$unempl.rate)  # convert unempl.rate to character
-unemp$unempl.rate <- gsub(",", ".", x = unemp$unempl.rate)  # replace commas with periods
-unemp$unempl.rate <- as.numeric(unemp$unempl.rate)  # convert unempl.rate to numeric
-
-# Remove raw data from environment
-rm(unemp_raw)
-
-
-## 2.5 Refugees
-
-# Keep necessary columns
-refugee <- refugee_raw[, c(2, 10)]
+refugee <- refugee_raw[, c(2, 4)]
 
 # Rename columns
 names(refugee) <- c("ID", "n.refugees")
 
-# Convert ID to numeric
-refugee$ID <- as.numeric(as.character(refugee$ID))
-
 # Remove raw data from environment
 rm(refugee_raw)
+
+
+
+## 2.6 District public debt
+
+# Keep necessary columns
+debt <- debt_raw[, c(2, 4)]
+
+# Rename columns
+names(debt) <- c("ID", "public.debt")
+
+# Remove raw data from environment
+rm(debt_raw)
