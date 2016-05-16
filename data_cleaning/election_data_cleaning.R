@@ -3,7 +3,7 @@
 # Collaborative Research Project
 # Election Data Cleaning
 # Johannes Schulz-Knappe 
-# Update 01 May 2016
+# Update 16 May 2016
 # Hertie School of Governance
 #######################################################################
 
@@ -71,7 +71,8 @@ bw$state <- "BW"
 ### Step 5: Create district ID
 
 bw_ID <- refugee_raw[, c(2, 3)] # Retrieve ID from 'refugee_raw' data
-bw_ID <- bw_ID[c(207:219, 221:232, 234:243, 245:253), ] # keep district IDs for BW
+bw_ID <- bw_ID[c(206:218, 220:231, 233:242, 244:252), ] # keep district IDs for BW
+names(bw_ID) <- c("district.ID", "district.name")
 
 
 # Manipulate district names to match bw1 & bw2 district names
@@ -195,10 +196,13 @@ rp$election.year <- "2016"
 rp_ID <- refugee_raw[, c(2, 3)] 
 
 # Keep IDs for Rhineland-Palatinate
-rp_ID <- rp_ID[c(grep('^07', rp_ID$district.ID)), ]
+rp_ID <- rp_ID[c(grep('^7', rp_ID$V2)), ]
 
 # Delete IDs on non-district level
 rp_ID <- rp_ID[-c(1, 2, 14, 20), ] 
+
+# Rename ID columns
+names(rp_ID) <- c("district.ID", "district.name")
 
 
 # Clean district names
