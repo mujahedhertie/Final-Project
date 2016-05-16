@@ -3,7 +3,7 @@
 # Collaborative Research Project
 # Creating the Dataset
 # Johannes Schulz-Knappe
-# Update 01 May 2016
+# Update 16 May 2016
 # Hertie School of Governance
 #######################################################################
 
@@ -97,6 +97,9 @@ rm(unemp)
 rm(gdp)
 rm(refugee)
 rm(debt)
+
+# Divide vote.AfD by 100 in order to enable beta regression
+Data$vote.AfD <- Data$vote.AfD/100
 
 # Save Data as file in repository
 save(Data, file = "Data_new.Rda")
