@@ -246,7 +246,7 @@ stargazer::stargazer(reg1, reg2, reg3, reg4, reg5,
 #rega1 <- lm(vote.AfD.prcnt ~ state*unempl.rate, data = Data)
 
 Data$state=as.factor(Data$state)
-rega1 <- lm(vote.AfD.prcnt ~ GDP.capita + state*unempl.rate + n.refugees 
+rega1 <- lm(vote.AfD.prcnt ~ GDP.capita + state*unempl.rate + state + unempl.rate + n.refugees 
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
              nodegree.ratio, data = Data)
 summary(rega1)
