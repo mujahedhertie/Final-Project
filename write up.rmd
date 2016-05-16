@@ -63,7 +63,7 @@ rm(possible_dir) # remove possible_dir vector
 
 
 ```{r data, echo=F, warning=F, message=F, error=F}
-load("Data.Rda") # Load data file
+load("Data_new.Rda") # Load data file
 newvariable <- (Data[,4]/(100)) #creating new variable by dividing vote.AfD variable by 100
 Data$vote.AfD.prcnt <- newvariable # adding that variable into dataframe
 
