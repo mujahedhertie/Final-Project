@@ -2,7 +2,7 @@
 title: "What Explains the Electoral Success of the AfD?"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
 date: |
-  | May 2, 2016
+  | May 16, 2016
   | Hertie School of Governance
 output:
   pdf_document: default
@@ -56,25 +56,18 @@ possible_dir <- c('C:/Users/Johannes SK/Dropbox/Studium/Spring2016/Collaborative
 
 set_valid_wd(possible_dir) # Set to first valid directory in the possible_dir vector
 rm(possible_dir) # remove possible_dir vector
-#View(Data)
-#write.csv(Data, file = "afd.csv")
-#write.dta(Data, file = "afd.dta")
 ```
-
 
 ```{r data, echo=F, warning=F, message=F, error=F}
 load("Data_new.Rda") # Load data file
-newvariable <- (Data[,4]/(100)) #creating new variable by dividing vote.AfD variable by 100
-Data$vote.AfD.prcnt <- newvariable # adding that variable into dataframe
 
+# Create new variable by dividing vote.AfD variable by 100
+Data$vote.AfD.prcnt <- Data$vote.AfD/100 
 
-reod <- Data[c(0:3,17,5:16,4)] #reordering variable to replace vote.AfD.prcnt variable in place of vote.AfD
-Data <- reod # adding that into dataframe
-#View(Data)
+# Reorder variables to replace vote.AfD.prcnt variable in place of vote.AfD
+reord <- Data[c(0:3, 20, 5:19, 4)] 
+Data <- reord
 ```
-
-
-
 
 
 ## Introduction
@@ -112,7 +105,7 @@ Data <- reod # adding that into dataframe
 
 Variable | Name in dataset | Description |
 --------------------|-----------------|-------------------------------|
-Dependent Variable (DV) | **vote.AfD** | The vote share of the Alternative for Germany in the current state election |
+Dependent Variable (DV) | **vote.AfD.prcnt** | The vote share of the Alternative for Germany in the current state election |
 Independent Variable 1 (IV1) | **lag.turnout** | Overall voter turnout of the previous state election                        |
 IV2, IV3, IV4, IV5, IV6 | **lag.CDU**, **lag.Greens**, **lag.SPD**, **lag.FDP**, **lag.Linke** | The vote share of political parties in the previous state election (CDU, SPD, Greens, FDP, and Linke) |
 
@@ -277,11 +270,7 @@ p
 ```
 
 
-
-
 ```
-
-
 
 ## Inferential Statistics: Beta regression analysis
 
@@ -319,13 +308,6 @@ stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
                      no.space = T,
                      digits = 2) # add no.space=TRUE to remove space in betwen line. 
 ```
-
-
-
-
-
-
-
 
 
 ``` {r betareganalyis, echo = F, message = F, results = "asis", error=F}
