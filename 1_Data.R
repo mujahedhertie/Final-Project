@@ -88,6 +88,7 @@ Data <- merge(Data, unemp, "ID")
 Data <- merge(Data, gdp, "ID")
 Data <- merge(Data, refugee, "ID")
 Data <- merge(Data, debt, "ID")
+Data <- merge(Data, type, "ID")
 
 # Remove used data frames
 rm(data.election)
@@ -97,9 +98,10 @@ rm(unemp)
 rm(gdp)
 rm(refugee)
 rm(debt)
+rm(type)
 
-# Divide vote.AfD by 100 in order to enable beta regression
-Data$vote.AfD.prcnt <- Data$vote.AfD/100
+# Round all variables to 2 digits
+Data[, c(13, 14, 16, 18)] <- round(as.matrix(Data[, c(13, 14, 16, 18)]), digits=2)
 
 # Save Data as file in repository
 save(Data, file = "Data_new.Rda")

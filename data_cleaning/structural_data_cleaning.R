@@ -30,9 +30,6 @@ names(size) <- c("ID", "district.size")
 # Convert ID to numeric
 size$ID <- as.numeric(as.character(size$ID)) 
 
-# Remove raw data from environment
-rm(size_raw)
-
 
 
 ## 2.2 Education
@@ -125,6 +122,9 @@ debt <- debt_raw[, c(2, 4)]
 # Rename columns
 names(debt) <- c("ID", "public.debt")
 
+# Divide debt by 1000 for better readability
+debt$public.debt <- debt$public.debt/1000
+
 # Remove raw data from environment
 rm(debt_raw)
 
@@ -133,14 +133,17 @@ rm(debt_raw)
 ## 2.7 District type
 
 # Keep necessary columns
-# type <- size_raw[, c(2, 3)]
+type <- size_raw[, c(2, 3)]
 
 # Create type column
-# type$district.type <- 0
-  
-#   grep('Kreisfreie Stadt', type$district.name)
-  
-#   rp1 <- rp1[-c(1, grep('VG$', rp1$district.name)), ]   
+type$district.type <- 0
+type$district.type[grep('Kreisfreie Stadt', type$district.name)] <- 1
 
-  
-grep('Kreisfreie Stadt', type$district.name)
+# Rename column
+names(type) <- c("ID", "district.name", "district.type")
+
+# Remove used column
+type$district.name <- NULL
+
+# Remove raw data from the environment
+rm(size_raw)
