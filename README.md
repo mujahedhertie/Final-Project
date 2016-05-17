@@ -18,7 +18,7 @@ The task for this assignment was to pose a social science question and attempt t
 
 3) A website designed to present key aspects of our research to a general audience 
 
-As of May 17, 2016, this repository contains a) the presentation which was hold in class at May 02, 2016, b) the Final Paper (both in the master branch), as well as the website (in the gh-pages branch)
+As of May 17, 2016, this repository contains a) the presentation which was hold in class at May 02, 2016, b) the Final Paper (both in the master branch), and the website (in the gh-pages branch).
 
 
 ### Documents in the repository
@@ -35,5 +35,5 @@ Besides this readme, there are 9 main files in the repository
 - [Presentation.pdf](https://github.com/mujahedhertie/Final-Project/blob/master/Presentation.pdf) is the pdf output file of our presentation
 
 
-Furthermore, there are four folders. The [data_gathering](https://github.com/mujahedhertie/Final-Project3/tree/master/data_gathering) folder contains the two R files that gather and scrape our datasets, while the [data_cleaning](https://github.com/mujahedhertie/Final-Project/tree/master/data_cleaning) folder contains the two R files that clean the election and the structural data. The [Data.R](https://github.com/mujahedhertie/Final-Project/blob/master/Data.R) file has to have access to those folders in order to run the data collection.
+Furthermore, there are three folders. The [data_gathering](https://github.com/mujahedhertie/Final-Project3/tree/master/data_gathering) folder contains the two R files that gather and scrape our datasets, while the [data_cleaning](https://github.com/mujahedhertie/Final-Project/tree/master/data_cleaning) folder contains the two R files that clean the election and the structural data. The [Data.R](https://github.com/mujahedhertie/Final-Project/blob/master/Data.R) file has to have access to those folders in order to run the data collection.
 The [data_raw](https://github.com/mujahedhertie/Final-Project/tree/master/data_raw) folder contains the structural data sets that were manually downloaded from the Genesis-Online database.
