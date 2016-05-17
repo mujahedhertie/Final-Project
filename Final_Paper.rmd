@@ -514,43 +514,9 @@ stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
                      digits = 2) # add no.space=TRUE to remove space in betwen line. 
 ```
 
-<<<<<<< HEAD
-
 # Limitations and Future Research
 
 There are certain limitations we had to face during our research. Extending the analysis on all state elections in Germany where the AfD has participated would be an improvement for the analysis as it would increase the number of observations. We also could not access the most recent data on the number of refugees that are allocated into the districts in Germany within the last years. When comparing the electoral success of the AfD before the March 2016 state elections with the elections, it becomes clear that external factors such as the refugee crisis have strongly pushed the AfD. Further research on the results of the coming state elections could lead to a better understanding of the trends we observed.
-=======
-... What did you do here? Please shortly explain ...
-
-``` {r betareganalyis, echo = F, message = F, results = "asis", error=F}
-betalogit <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data)
-betaloglog <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data, link = "loglog")
-
-
-library(ggplot2)
-ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
-  geom_point(size = 4, shape = 21) +
-  scale_fill_grey() +
-  geom_line(aes(y = predict(betaloglog, Data),
-                colour = "log-log", linetype = "log-log")) +
-  geom_line(aes(y = predict(betalogit, Data), 
-                colour = "logit", linetype = "logit")) +
-  scale_colour_manual("", values = c("red", "blue")) +
-  scale_linetype_manual("", values = c("solid", "dashed")) +
-  theme_bw()
-```
-
-
-# Limitations and Future Research
-
-One of the limitations of this paper is that it has a parsimonious sample size. Besides the analysis is based only on the three districts of Germany and could not examine all the districts. Furthermore, the structural data on some of the variables particularly number of refugees is not recent. Thus future research could be carried out collecting updated data from all the districts to see what drives the electoral success of AfD. 
-
-# Conclusion
-
-This paper examines factors that lead to the recent electoral success of AfD. One of the novel contributions of this paper is that it uses a newly generated electoral data provided by the State Offices for Statistics and structural data on the administrative districts provided by the Federal Statistical Office DESTATIS. By employing both ordinary OLS and beta regression method using these datasets, this paper finds that increase in unemployment rate is the most evident factor that lead to the recent electoral landslide for the AfD. However, the result on interaction model shows that the effects of unemployment on AfD's success varies depending on districts and this effects are mostly driven by Saxony Anhalt. The result furthermore shows that increase in the vote share of CDU and SPD in the last election also contributed to the AfD's success. However, the result from another interaction model shows that the marginal effects of CDU's vote share on AfD's electoral success actually changes depending on the vote share of SPD.  Though this paper uses a parsimonious sample size and bases its analysis only on the three districts of Germany, the empirical model seems to be strong as it explains more than 70 percent of the total variation of AfD's vote share. However, since this paper could not analyse all the districts, future research could be carried out collecting updated data from all the districts to see what drives the electoral success of AfD and also to see whether effects of unemployment, among others, on AfD's vote is consistent or not.
-
-
->>>>>>> origin/master
 
 \pagebreak
 
