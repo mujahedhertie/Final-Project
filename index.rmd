@@ -5,19 +5,9 @@ author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
 date: |
   | May 16, 2016
   | Hertie School of Governance
-output:
-  pdf_document: default
-  fonttheme: structuresmallcapsserif
-  html_document: null
-  colortheme: beaver
-  slide_level: 2
-  theme: Warsaw
-header-includes: \widowpenalties 1 150
-
+output: html_document
 bibliography:
 - Library.bib
-- Packages1.bib
-- Packages2.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -43,10 +33,6 @@ loaded <- lapply(load, function(x) {
     require(x, character.only = T)
   }
 })
-
-## Create bibTeX file for the used packages
-LoadandCite(load, file = 'Packages2.bib')
-
 rm(load, loaded)
 
 figcap <- captioner(prefix = "Figure", 
@@ -70,18 +56,19 @@ rm(possible_dir) # remove possible_dir vector
 load("Data.Rda") # Load data file
 ```
 
+
 # Introduction
 
-Within less than three years of being founded by discontented members of the incumbent Christian Democratic Union (CDU), the newly-formed party "Alternative for Germany" (AfD) has already achieved extraordinary vote share in the General election of 2013, the European Parliament election of 2014, [@arzheimer2015afd] and lately in the three state elections in Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt held on March 2016. The rise of a party that stands against European Integration, argues for a re-arrangement of Germany's liberal foreign and economic policies, and vows for taking strong measure against immigrants, has presented a novel scenario into understanding factors that drive electorate to vote for a party that seemingly stands against the 'norm of the land'. Thus this research project endeavors to understand the factors that explain the success and rise of AfD in Germany's political landscape. In the following, we present current literature, the selected datasets, our applied methodology, and our findings. All work is done using the software R [@CiteR].
+Within less than three years of being founded by discontented members of the incumbent Christian Democratic Union (CDU), the newly-formed party "Alternative for Germany" (AfD) has already achieved extraordinary vote share in the General election of 2013, the European Parliament election of 2014, [@arzheimer2015afd] and lately in the three state elections in Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt held on March 2016. The rise of a party that stands against European Integration, argues for a re-arrangement of Germany's liberal foreign and economic policies, and vows for taking strong measure against immigrants, has presented a novel scenario into understanding factors that drive electorate to vote for a party that seemingly stands against the 'norm of the land'. Thus this research project endeavors to understand the factors that explain the success and rise of AfD in Germany's political landscape. In the following, we present current literature, the selected datasets, our applied methodology, and our findings. All work is done using the software R [@CiteR].
 
 ## The Research Question
 
-On March 13, 2016, Germany's political landscape experienced "a landslide"[@Zeit2016]. At the three state elections in Bade-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt, the AfD received double digit results from scratch, meaning that it has not been present in the state parliaments before. In Baden-Württemberg (BW), the party received 15.1%, in Rhineland-Palatinate (RP) 12.6%, and in Saxony-Anhalt (SA) even 24.3% [@BWStateOffice; @RPStateOffice; @SAStateOffice], becoming the third strongest party in BW and RP, and the second strongest in SA.
+On March 13, 2016, Germany's political landscape experienced "a landslide"[@Zeit2016]. At the three state elections in Bade-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt, the AfD received double digit results from scratch, meaning that it has not been present in the state parliaments before. In Baden-WÃ¼rttemberg (BW), the party received 15.1%, in Rhineland-Palatinate (RP) 12.6%, and in Saxony-Anhalt (SA) even 24.3% [@BWStateOffice; @RPStateOffice; @SAStateOffice], becoming the third strongest party in BW and RP, and the second strongest in SA.
 Not only does the tremendous success of this new political player harden the setup of the future governments in the respective states, it is also a clear sign that the party has arrived in German mainstream politics [@Spiegel2016].
 
 Our research question is:
 
-*"What explains the recent electoral success of the AfD in the different administrative districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
+*"What explains the recent electoral success of the AfD in the different administrative districts of Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
 
 We want to understand which structural factors affect the electoral success of the AfD and whether the characteristics of its voters identified in post-election analyses are reflected in the district level data. Also, we want to find out whether it follows the same patterns as the electoral success of radical right populist parties in the rest of Western Europe.
 
@@ -131,7 +118,7 @@ Political hypotheses
 
 In order to test these hypotheses, we combined two main data types in order to generate our variables.
 
-The first data type is the electoral data provided by the State Offices for Statistics on the last state elections in Baden-Württemberg [@BWStateOffice], Rhineland-Palatinate [@RPStateOffice], and Saxony-Anhalt [@SAStateOffice]. The variables retrieved from these datasets are:
+The first data type is the electoral data provided by the State Offices for Statistics on the last state elections in Baden-WÃ¼rttemberg [@BWStateOffice], Rhineland-Palatinate [@RPStateOffice], and Saxony-Anhalt [@SAStateOffice]. The variables retrieved from these datasets are:
 
 Variable | Name in dataset | Description |
 --------------------|-----------------|-------------------------------|
@@ -153,7 +140,7 @@ IV13 | **district.type** | Categorical variable, 1 for urban districts, 0 for co
 
 ## Dataset preparation
 
-**Election Data** - Gathering the election data was complicated due to the independence of the Statistical State Offices. Every German state office chooses its own format to provide data online. While we thought about collecting data on all state elections in Germany where the AfD has won seats, we had to limit our efforts to the three states Baden-Württemberg (BW), Rhineland-Palatinate (RP), and Saxony Anhalt (SA) in order to provide a working dataset in the given time frame.
+**Election Data** - Gathering the election data was complicated due to the independence of the Statistical State Offices. Every German state office chooses its own format to provide data online. While we thought about collecting data on all state elections in Germany where the AfD has won seats, we had to limit our efforts to the three states Baden-WÃ¼rttemberg (BW), Rhineland-Palatinate (RP), and Saxony Anhalt (SA) in order to provide a working dataset in the given time frame.
 We retrieved district level data on the 2016 and 2011 state elections from the respective websites. While the data was available in separate files for RP and SA, district level data was only available for BW in a combined table that had to be divided in following steps. In total, we gathered five different datasets on the elections.
 
 **Structural Data** - The website of the DESTATIS online database "Genesis-Online" was the source of the structural data files. As DESTATIS does not offer an API, the data had to be manually downloaded from the database. We saved four datasets as csv files that were subsequently loaded into our project.
@@ -220,7 +207,7 @@ ggplot(Data) +
                fill = state), 
            stat = "identity") +
   ylab("AfD vote share (in %)") +
-  xlab("Districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony Anhalt") +
+  xlab("Districts of Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony Anhalt") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90))
 ```
@@ -383,9 +370,9 @@ apatheme=theme_bw()+
 
 p=ggplot(Data, aes(x=unempl.rate, y=vote.AfD.prcnt, shape=state))+
 geom_point()+
-scale_shape_manual(values=c(1,6,9), name='States', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
+scale_shape_manual(values=c(1,6,9), name='States', labels=c('Rhineland-Palatinate','Baden-WÃ¼rttemberg', 'Saxony-Anhalt'))+
 geom_line(aes(x = unempl.rate, y = predicted, linetype=state)) +
-scale_linetype_discrete(name='Districts', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
+scale_linetype_discrete(name='Districts', labels=c('Rhineland-Palatinate','Baden-WÃ¼rttemberg', 'Saxony-Anhalt'))+
 labs(x = 'Unemployment rate', y = 'Vote share of AfD')+
 apatheme
 p
