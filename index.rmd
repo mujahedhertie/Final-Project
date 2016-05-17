@@ -3,11 +3,15 @@ title: "What Explains the Electoral Success of the AfD?"
 subtitle: "An Analysis of the March 2016 State Elections in Germany"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
 date: |
-  | May 16, 2016
+  | May 17, 2016
   | Hertie School of Governance
-output: html_document
-bibliography:
-- Library.bib
+output: 
+  html_document:
+    theme: "united"
+    fig_caption: yes
+    toc: yes
+    number_sections: yes
+bibliography: Library.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +29,7 @@ load <- c("repmis", "magrittr", "scales", "betareg", "dplyr", "xtable", "texreg"
           "stargazer", "readxl", "ggplot2", "grid", 
           "captioner", "foreign", "rms", "Zelig", 
           "knitr", "GGally", "gridExtra", 
-          "zoo", "rugarch", "psych")
+          "zoo", "rugarch", "psych", "plotly", "ggplot2")
 
 loaded <- lapply(load, function(x) {
   if(!require(x, character.only = T)) {
@@ -56,6 +60,7 @@ rm(possible_dir) # remove possible_dir vector
 load("Data.Rda") # Load data file
 ```
 
+![](March2016_State-elections.jpg)
 
 # Introduction
 
@@ -72,26 +77,19 @@ Our research question is:
 
 We want to understand which structural factors affect the electoral success of the AfD and whether the characteristics of its voters identified in post-election analyses are reflected in the district level data. Also, we want to find out whether it follows the same patterns as the electoral success of radical right populist parties in the rest of Western Europe.
 
-## About the AfD
+## About the AfD 
 
 Having been founded in February 2013 initially as a eurosceptic party, the AfD just missed the entry into the German national parliament at the federal elections in September 2013 by only 125,000 votes [@schmitt2014euro]. Not a single party in the post-war era was that successful in national elections being only established seven months before [@niedermayer2015neue]. 
 This emergence is attributed to the Euro crisis and chancellor Merkels strong state interventionist austerity politics that opened political potential to the right of the established right wing parties CDU/CSU and FDP. The AfD recognized that potential and positioned itself initially as an expert knowledge based eurosceptic party. But over the last years, it became a new host for now unrepresented national conservatives as well as right wing populists. The unifying factors for these different groups are the anti-establishment attitude of the AfD and the image of being the political underdog who is "honest" in face of political and medial lies. In this regard, the AfD shares similarities to other European right wing populist parties [@hausler2015rechten].
 
+![](AfD_logo.png)
+
 The recent refugee crisis that has hit Europe and especially Germany is seen as a major factor that led to new and increased support for the AfD. Chancellor Angela Merkels slogan "Wir schaffen das", expressing optimism with regards to the capability of government and society to handle the refugee crisis, was mostly criticized by members of the AfD and to some extend from the CDU itself. As long as the refugee crisis persists, it is assumed that the AfD is going to continue to gain more support [@Spiegel2016].After the March elections, a large debate arose within the CDU/CSU whether the refugee crisis response by chancellor Merkel was responsible for the loss in votes for the CDU. Interestingly, leaders of other parties who supported Merkels "Wir schaffen das" experienced less loss of votes. However, left parties such as "Die Linke" seemed to be especially vulnerable to the emergence of the AfD [@Spiegel2016]. Also, the social democrats (SPD) seem to have lost many voters to the AfD [@Zeit2016].
 
-# Literature review
-
-Early analysis of the elections has shown that the AfD was especially successful in mobilizing former non-voters [@Spiegel2016]. It was also very successful amongst laborers and unemployed people. In Saxony-Anhalt, almost one third of this group voted for the AfD. But the analysis also showed that more people with medium education and income voted for the AfD. It is suggested that they are increasingly afraid of change, see the refugee crisis as a culmination of external threat, and are skeptical in the governments capacity to solve it [@Zeit2016].
-
-In a mixed-methods study focusing on the AfD's history, self-description, positioning in the public discourse, and its supporters, @Berbuir2015 found that the party can be described as a "functional equivalent for a right-wing populist party in a country where right-wing politics are strongly stigmatized" [@Berbuir2015]. For our research this means that the AfD can be located in the tradition of new radical right wing populist (RRWP) parties in Western Europe.
-
-When it comes to the understanding of the rise of RRWP parties, @Ivarsflaten2008 and @swank2003globalization offer important insights.
-In her large scale study comparing the electoral success of RRWP parties, @Ivarsflaten2008 found that successful RRWP parties almost always used anti-immigration rhethorics in their electoral campaigns. The other two focus areas of RRWP parties - opposing political elitism and complains about the economic development - were not always instrumentalized by successful RRWP parties and seem to be more context specific.
-@swank2003globalization analyzed the impact of globalization on the electoral success of RRWP parties in national elections in 16 Western European nations between 1981 and 1998. Their core finding was that the generosity of the welfare state was an important factor that mitigated the impact of economic globalizations on the rise of RRWP parties. Besides that, they found that the volume of refugees and asylum seekers, the level of international immigration, the height of domestic tax burden, previous electoral success of left libertarian parties, and the past vote share of the RRWP parties all systematically and positively influenced their electoral success. In some occasions, previously declining strength of established right-wing parties was another factor that explained RRWP party success. Interestingly, slow economic growth and the rate of people employed in manufacturing jobs did not have a significant impact [@swank2003globalization, 230].
 
 # Hypotheses
 
-Based on the insights from previous research on the success of RRWP parties in Western Europe and the findings from post-election analysis for the AfD, we aim to test the following hypotheses for the three state elections.
+Based on insights from previous research on the success of RRWP parties in Western Europe and the findings from post-election analysis for the AfD, we aim to test the following hypotheses for the three state elections.
 
 Demographic hypotheses
 
@@ -114,7 +112,7 @@ Political hypotheses
 > *H4b*: The success of left wing parties in previous state elections in a district has a positive impact on the electoral success of the AfD.
 
 
-# Data Sources and Methodology
+# Data Sources
 
 In order to test these hypotheses, we combined two main data types in order to generate our variables.
 
@@ -138,20 +136,6 @@ IV11 | **n.refugees** | Number of asylum seekers per district |
 IV12 | **public.debt** | Aggregated debt of the municipalities in a district (by 1000) |
 IV13 | **district.type** | Categorical variable, 1 for urban districts, 0 for country districts |
 
-## Dataset preparation
-
-**Election Data** - Gathering the election data was complicated due to the independence of the Statistical State Offices. Every German state office chooses its own format to provide data online. While we thought about collecting data on all state elections in Germany where the AfD has won seats, we had to limit our efforts to the three states Baden-Württemberg (BW), Rhineland-Palatinate (RP), and Saxony Anhalt (SA) in order to provide a working dataset in the given time frame.
-We retrieved district level data on the 2016 and 2011 state elections from the respective websites. While the data was available in separate files for RP and SA, district level data was only available for BW in a combined table that had to be divided in following steps. In total, we gathered five different datasets on the elections.
-
-**Structural Data** - The website of the DESTATIS online database "Genesis-Online" was the source of the structural data files. As DESTATIS does not offer an API, the data had to be manually downloaded from the database. We saved four datasets as csv files that were subsequently loaded into our project.
-
-The biggest challenge during the data cleaning was the generation of a common identifier for the different dataset. Except for the SA data, the election datasets is not provided with the district key which is the main identifier for the DESTATIS data. In order to add the identifier to the election data, we converted the district names that were available in both the election and the structural DESTATIS data into the same format and structure. Then, we sorted the data frames in the same way to add the identifier to the election data.
-
-Finally, we merged all datasets into a single one which contains the variables mentioned above, the election year, and a state indicator on 94 observations.
-
-## Analysis Methods
-
-... This is for you, Mujahed ...
 
 # Empirical Findings
 
@@ -174,7 +158,7 @@ stargazer(Data[4:17],
           covariate.labels = summary_labels,
           font.size = 'tiny',
           title= 'Summary statistics of the covariates',
-          type="latex", header = FALSE)
+          type="html", header = FALSE)
 ```
 
 ## Correlations among variables
@@ -192,7 +176,7 @@ correlation.matrix <- cor(Data[, c("vote.AfD","lag.CDU",
 stargazer(correlation.matrix,
           title= 'Correlation matrix of some variables',
           digits = 2,
-          type="latex", 
+          type="html", 
           header = FALSE, 
           no.space = FALSE)
 ```       
@@ -201,7 +185,7 @@ stargazer(correlation.matrix,
 When lining up the districts according to the vote share of the AfD, it becomes clear that the party achieved an overall stable and even vote share. The only real outliers are a couple of districts in Saxony Anhalt where the AfD achieved it's by far greatest successes.
 
 ```{r bar, echo=F, warning=F, message=F, error=F, results='hide', fig.width=13}
-ggplot(Data) +
+barplot <- ggplot(Data) +
   geom_bar(aes(y = vote.AfD, 
                x = reorder(district.name, -vote.AfD),
                fill = state), 
@@ -210,6 +194,8 @@ ggplot(Data) +
   xlab("Districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony Anhalt") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90))
+
+ggplotly(barplot)
 ```
 
 ## Correlations
@@ -221,12 +207,14 @@ In the following, we test our hypotheses with simple correlations.
 ... Add text ...
 
 ``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
-ggplot2::ggplot(Data, aes(log(x = abitur.ratio), vote.AfD, colour = state)) + 
+fig1 <- ggplot2::ggplot(Data, aes(log(x = abitur.ratio), vote.AfD, colour = state)) + 
   xlab("Abitur ratio per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_bw()
+
+ggplotly(fig1)
 ```
 
 ### Correlation of AfD vote share and unemployment rate (H1b)
@@ -234,12 +222,14 @@ ggplot2::ggplot(Data, aes(log(x = abitur.ratio), vote.AfD, colour = state)) +
 The following graph shows a statistically significant (the t value from the Pearson's product-moment correlation test is 6.27) positive correlation of the logged unemployment rate in a district with the AfD vote share. However, the correlation seems to be negative for districts with lower unemployment rates but becomes strongly positive for districts with high unemployment. The positive correlation of the abitur ratio with the unemployment rate and its negative correlation with the AfD vote share visible in the correlation matrix could offer a possible explanation for this. We will test this later by controlling for urbanization.
 
 ``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
-ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD, colour = state)) + 
+fig2 <- ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD, colour = state)) + 
   xlab("Unemployment rate per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_bw()
+
+ggplotly(fig2)
 ```
 
 ### Correlation of AfD vote share and number of refugees (H2)
@@ -247,24 +237,28 @@ ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD, colour = state)) +
 The result shows a positive correlation of the number of refugees per district with the AfD vote share. But it is not statistically significant since the t value is 0.13 (from the Pearson's product-moment correlation test). Since the data on the refugees per district is from 2013, it is highly outdated. We were not able to acquire more recent data (for 2014 or even for 2015) in order to conduct a meaningful analysis here.
 
 ``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
-ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD, colour = state)) + 
+fig3 <- ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD, colour = state)) + 
   xlab("Number of refugees per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_light()
+
+ggplotly(fig3)
 ```
 
 ### Correlation of AfD vote share and GDP per capita (H3)
 The following graph shows a slightly statistically significant (t value is -2.04) negative correlation of GDP per capita with AfD vote share. The effect seems to be mostly influenced by a small group of outliers (high vote share, low GDP per capita) and the variance is not equal across the independent variable (posing a problem with heteroscedasticity).
 
 ``` {r fig4, echo = F, message = F, results = "hide", error=F, fig.height=4}
-ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD, colour = state)) + 
+fig4 <- ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD, colour = state)) + 
   xlab("GDP per capita per district / 1000 (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_bw()
+
+ggplotly(fig4)
 ```
 
 ### Correlation of AfD vote share and voter turnout in previous elections (H4a)
@@ -272,12 +266,14 @@ ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD, colour = state)) +
 ... Add text here ...
 
 ``` {r fig5, echo = F, message = F, results = "hide", error=F, fig.height=4}
-ggplot2::ggplot(Data, aes(log(x = lag.turnout), vote.AfD, colour = state)) + 
+fig5 <- ggplot2::ggplot(Data, aes(log(x = lag.turnout), vote.AfD, colour = state)) + 
   xlab("Previous voter turnout per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_bw()
+
+ggplotly(fig5)
 ```
 
 ### Correlation of AfD vote share and strength of left wing parties (H4b)
@@ -285,12 +281,13 @@ ggplot2::ggplot(Data, aes(log(x = lag.turnout), vote.AfD, colour = state)) +
 ... Add text here ...
 
 ``` {r fig6, echo = F, message = F, results = "hide", error=F, fig.height=4}
-ggplot2::ggplot(Data, aes(log(x = lag.SPD), vote.AfD, colour = state)) + 
+fig6 <- ggplot2::ggplot(Data, aes(log(x = lag.SPD), vote.AfD, colour = state)) + 
   xlab("Previous voteshare of SPD per district (log)") +
   ylab("AfD vote share (in %)") +
   geom_point(aes(colour = state)) + 
   geom_smooth() + 
   theme_bw()
+ggplotly(fig6)
 ```
 
 
@@ -332,7 +329,7 @@ stargazer::stargazer(reg1, reg2, reg3, reg4, reg5,
                      label = 'AfD_voteshare',
                      add.lines = list(c('District FE', rep('NO', 5))),
                      float = F, df = F, # add float and df to F
-                     type="latex", header = F, 
+                     type="html", header = F, 
                      no.space = T,
                      digits = 2) # add no.space=TRUE to remove space in betwen line. 
 ```
@@ -416,7 +413,7 @@ stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
                      add.lines = list(c('District FE', rep('NO', 5))),
                      font.size = 'tiny', # make the font tiny
                      float = F, df = F, # add float and df to F
-                     type="latex", header = F, 
+                     type="html", header = F, 
                      no.space = T,
                      digits = 2) # add no.space=TRUE to remove space in betwen line. 
 ```
@@ -427,9 +424,7 @@ stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
 betalogit <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data)
 betaloglog <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data, link = "loglog")
 
-
-library(ggplot2)
-ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
+betareg <- ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
   geom_point(size = 4, shape = 21) +
   scale_fill_grey() +
   geom_line(aes(y = predict(betaloglog, Data),
@@ -439,6 +434,8 @@ ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
   scale_colour_manual("", values = c("red", "blue")) +
   scale_linetype_manual("", values = c("solid", "dashed")) +
   theme_bw()
+
+ggplotly(betareg)
 ```
 
 
@@ -455,4 +452,4 @@ ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
 - Use beta regression as dependent variable is [0, 1] bounded
 
 
-## References {.allowframebreaks}
+## References
