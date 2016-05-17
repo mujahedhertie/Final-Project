@@ -196,44 +196,50 @@ ggplotly(barplot)
 
 The following graph shows a statistically significant (the t value from the Pearson's product-moment correlation test is 6.27) positive correlation of the logged unemployment rate in a district with the AfD vote share. However, the correlation seems to be negative for districts with lower unemployment rates but becomes strongly positive for districts with high unemployment. The positive correlation of the abitur ratio with the unemployment rate and its negative correlation with the AfD vote share visible in the correlation matrix could offer a possible explanation for this. We will test this later by controlling for urbanization.
 
-``` {r fig2, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
+``` {r fig2, echo = F, message = F, results = "asis", error=F, fig.height=4}
+
 fig2 <- ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD, colour = state)) + 
-  xlab("Unemployment rate per district (log)") +
-  ylab("AfD vote share (in %)") +
-  geom_point(aes(colour = state)) + 
-  geom_smooth() + 
-  theme_bw()
+                        xlab("Unemployment rate per district (log)") +
+                        ylab("AfD vote share (in %)") +
+                        geom_point(aes(colour = state)) + 
+                        geom_smooth() + 
+                        theme_bw()
 
 ggplotly(fig2)
+
 ```
 
 ## Correlation of AfD vote share and number of refugees
 
 The result shows a positive correlation of the number of refugees per district with the AfD vote share. But it is not statistically significant since the t value is 0.13 (from the Pearson's product-moment correlation test). Since the data on the refugees per district is from 2013, it is highly outdated. We were not able to acquire more recent data (for 2014 or even for 2015) in order to conduct a meaningful analysis here.
 
-``` {r fig3, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
+``` {r fig3, echo = F, message = F, results = "asis", error=F, fig.height=4}
+
 fig3 <- ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD, colour = state)) + 
-  xlab("Number of refugees per district (log)") +
-  ylab("AfD vote share (in %)") +
-  geom_point(aes(colour = state)) + 
-  geom_smooth() + 
-  theme_light()
+                        xlab("Number of refugees per district (log)") +
+                        ylab("AfD vote share (in %)") +
+                        geom_point(aes(colour = state)) + 
+                        geom_smooth() + 
+                        theme_light()
 
 ggplotly(fig3)
+
 ```
 
 ## Correlation of AfD vote share and GDP per capita
 The following graph shows a slightly statistically significant (t value is -2.04) negative correlation of GDP per capita with AfD vote share. The effect seems to be mostly influenced by a small group of outliers (high vote share, low GDP per capita) and the variance is not equal across the independent variable (posing a problem with heteroscedasticity).
 
-``` {r fig4, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
+``` {r fig4, echo = F, message = F, results = "asis", error=F, fig.height=4}
+
 fig4 <- ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD, colour = state)) + 
-  xlab("GDP per capita per district / 1000 (log)") +
-  ylab("AfD vote share (in %)") +
-  geom_point(aes(colour = state)) + 
-  geom_smooth() + 
-  theme_bw()
+                        xlab("GDP per capita per district / 1000 (log)") +
+                        ylab("AfD vote share (in %)") +
+                        geom_point(aes(colour = state)) + 
+                        geom_smooth() + 
+                        theme_bw()
 
 ggplotly(fig4)
+
 ```
 
 
