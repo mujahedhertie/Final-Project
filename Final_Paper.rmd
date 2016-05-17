@@ -164,8 +164,6 @@ Finally, we merged all datasets into a single one which contains the variables m
 
 ## Analysis Methods
 
-... This is for you, Mujahed ...
-
 # Empirical Findings
 
 With the generated dataset we were able to conduct our analysis. Since our dependent variable is a [0, 1] bounded variable (meaning, the vote share can take values between 0% and 100%), we used beta regression for our analysis. In the beginning we used OLS to get a basic idea of the relationships of the selected variables.
@@ -307,35 +305,44 @@ ggplot2::ggplot(Data, aes(log(x = lag.SPD), vote.AfD, colour = state)) +
 ```
 
 
-## Inferential Statistics
 
-Since the initial descriptive statistics and graphs indicate certain relations and interactions, we built several regression models which we ran as OLS regression analysis first and then as beta regression.
+# Methods
+This paper employs two empirical methods i.e., multivariate Ordinary Least Square (OLS) regression and Beta regression to examine factors that lead to the recent electoral success of AfD. The selection of method is also theoretically driven. Since our response variable is continuous, we have chosen OLS method. The class of OLS regression models is commonly used by researchers to model variables that take interval valuses as is the case for our dependent variable. The reason, on the other hand, to choose the beta regression method is for the precision and robustness purpose. Beta regression assumes that the dependent variable is beta-distributed and that its mean is related to a set of regressors through a linear predictor with unknown coefficients and a link function. Thus the beta regression is highly pertinent for our study since we are going to analyze vote share of AfD which is scaled from 0 to 1, inclusive, although 1 (complete vote received by AfD) is virtually impossible, and in our data, we observe values only up to .2944 (29.440/100). One of the merits of this method is that it includes a precision parameter which may be constant or rely on a (potentially different) set of regressors through a link function as well. Thus this approach naturally incorporates features such as heteroskedasticity or skewness which are commonly observed in data taking values in the standard unit interval, such as rates or proportions [@cribari2009beta].
 
-### Normal multivariate OLS regression analysis
 
-Testing some initial regression models, we see that the unemployment rate, the vote share of the SPD in previous elections, and the ratio of people leaving school without a formal degree are statistically significant across all models. In almost each model a one percentage point increase of the unemployment rate leads to a one percentage point increase of the AfD vote share.
-On the other hand, the number of refugees per district and the vote share of the CDU are insignificant in every model.
+# Results
+
+## Empirical findings from ordinary multivariate OLS regression analysis
+
+Since the initial descriptive statistics and graphs indicate certain relations and interactions, we built several regression models which we ran as OLS regression analysis first and then as beta regression. The result from the base model (1) shows increase in per capita GDP reduces the vote share of AfD by .08 while one percentage increase in unemployment rate increases the vote share of AfD by 1.05 percentage point and these results are statistically significant. Surprising the findings show that increase in the number of refugees does not have statistically significant effect on AfD's vote share. However, our base model does not consider many important variables and thus there is a high possibility of omitted variable bias. Thus to check the robustness of the findings, this paper adds other covariates in different models shown in Table . The final model (2) controls election results variable of other parties in the previous election and it shows that vote share of SPD in 2011 election and overall voter turnout in 2011 election  significantly reduces the vote share of AfD by .20 and .24 percentage point respectively.  In model (3), we added abitur ratio (high school degree) and no degree ratio to the base model and result shows that one percentage point increase in high school degree reduces the AfD's vote share by .28 percentage point. In model (4), we controlled public debt and state variable to the base model and the result shows that relative to Rhineland-Palatinate, Baden-Württemberg has negative effects on AfD's vote share by 4.91 unit. Finally, in model (5), we added all the controls to the base model and the result shows that the effect of unemployment on increasing AfD's vote shore is consistent across all models. Besides, it shows that one percentage increase in CDU and SPD's vote share in the past election also increases the vote share of AfD though it was not the case in previous model. The result also shows that relative to Rhineland-Palatinate state, Saxony-Anhalt has positive effects on AfD's vote share. Thus based on the findings from OLS model, we can say that the recent electoral success of AfD is most likely due to the increase in unemployment rate  and also due to the increase in the CDU and SPD's vote share in the past election. Also it shows that the effect of Saxony-Anhalt is very strong on AfD's vote share. This model seems to be strong since we see that, with a parsimonious sample size with few controls, the R and adjusted R^2 is .78 which means about 78 percent of the variation in AfD's vote share is explained by our model. The findings of model (6) and (7) are discriped in the following figures. 
+
 
 ``` {r regout, echo = F, message = F, results = "asis", error=F}
+Data$state=as.factor(Data$state)
 reg1 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees, data = Data)
 reg2 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees + lag.CDU + 
              lag.SPD + lag.turnout, data = Data)
 reg3 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees + 
              abitur.ratio + nodegree.ratio, data = Data)
 reg4 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
-           + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
-             nodegree.ratio, data = Data)
+           +  public.debt + state, data = Data)
 reg5 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees 
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
-             nodegree.ratio + state, data = Data)
+             nodegree.ratio + public.debt + state, data = Data)
+reg6 <- lm(vote.AfD ~ GDP.capita + unempl.rate * state + n.refugees 
+           + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
+             nodegree.ratio + public.debt, data = Data)
+reg7 <- lm(vote.AfD ~ GDP.capita + unempl.rate +state + n.refugees 
+           + lag.CDU * lag.SPD + lag.turnout + abitur.ratio + 
+             nodegree.ratio + public.debt, data = Data)
 
 var_labels <- c('GDP per capita / 1000', 'Unemployment rate', 'Number of refugees', 
                 'Vote share of CDU in 2011 election',
                 'Vote share of SPD in 2011 election',
                 'Voter turnout in 2011 election',
-                'Abitur ratio', 'No degree ratio', 'State')
+                'Abitur ratio', 'No degree ratio', 'Public debt', 'stateBW')
 
-stargazer::stargazer(reg1, reg2, reg3, reg4, reg5,
+stargazer::stargazer(reg1, reg2, reg3, reg4, reg5, reg6, reg7 ,
                      omit = 'as.factor*', 
                      omit.stat = c('f', 'ser'), # to nicely fits on the page
                      out.header = F,
@@ -350,8 +357,7 @@ stargazer::stargazer(reg1, reg2, reg3, reg4, reg5,
                      digits = 2) # add no.space=TRUE to remove space in betwen line. 
 ```
 
-... Add text on the interaction here, Mujahed ...
-
+The result from OLS analysis shows that unemployment has strong and consistent effects on increasing AfD's vote share. Thus this paper further more runs an interaction model unemployment rate and districts level to see whether the effects of unemployment rate on AfD's vote share varies depending on districts. The result shows that most of the effects of unemployment is driven by Saxony-Anhalt. The increase in unemployment rate up to approximately 7 percentage does not have significant effect on AfD's vote share in Rhineland-Palatinam and Baden-Wurttemberg. However, the figure shows that increase in unemployment rate has a statistically significant effect on AfD vote share in Saxony-Anhalt. Thus we find evidence that unemployment rate has state based effect on increasing AfD's vote share. 
 
 ```{r AfD.prcnt, echo=F, warning=F, message=F, error=F}
 
@@ -372,7 +378,6 @@ Data$state=as.factor(Data$state)
 rega1 <- lm(vote.AfD.prcnt ~ GDP.capita + state*unempl.rate + state + unempl.rate + n.refugees 
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
              nodegree.ratio, data = Data)
-summary(rega1)
 Data$predicted=predict(rega1)
 apatheme=theme_bw()+
   theme(panel.grid.major=element_blank(),
@@ -383,7 +388,7 @@ apatheme=theme_bw()+
 
 p=ggplot(Data, aes(x=unempl.rate, y=vote.AfD.prcnt, shape=state))+
 geom_point()+
-scale_shape_manual(values=c(1,6,9), name='States', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
+scale_shape_manual(values=c(1,6,9), name='Districts', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
 geom_line(aes(x = unempl.rate, y = predicted, linetype=state)) +
 scale_linetype_discrete(name='Districts', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
 labs(x = 'Unemployment rate', y = 'Vote share of AfD')+
@@ -392,12 +397,137 @@ p
 #ggsave('scatter1.png', width=6, height=6, unit='in', dpi=300)
 ```
 
-With just a small selection of variables, the models have surprisingly high adjusted R^2. Between 40% and 64% of the variation of AfD vote share could be explained. However, this type of analysis (OLS) is not as suited for the analysis of a [0, 1] bounded dependent variable as the following beta regression.
+In model (7) of the OLS regression, this paper makes an interaction model of CDU with SPD's vote share to see whether the effects on CDU's lagged vote share on AfD's electoral success varies as SPD's vote share increases. The result from the following figure shows that the impact of 1 extra (percentage) vote of CDU on AfD's vote share reduces as the vote share of SPD rises. In other words, which means that it SPD gets more vote, any extra vote to CDU has a lower effect on AfD vote. The result also shows that up to 30 % of vote share of SPD, the marginal impact of CDU vote share on AfD's vote share significantly decreases Thus this interaction model provides evidence that the effects of CDU's vote share on AfD's vote share is not constant rather it varies on the SPD's vote share.   
+
+             
+``` {r betareanalyis, fig.width = 12, fig.height = 10, echo = F, message = F, results = "asis", error=F}
+interaction_plot_continuous <- function(model, effect, moderator, 
+                                        interaction, varcov="default", minimum="min", 
+                                        maximum="max", incr="default", num_points = 50,
+                                        conf=.95, mean=FALSE, median=FALSE, alph=80,
+                                        rugplot=T, histogram=T, title="Marginal effects plot", 
+                                        xlabel="Value of moderator", ylabel="Estimated marginal coefficient"){
+  
+  # Define a function to make colors transparent
+  makeTransparent<-function(someColor, alpha=alph){
+    newColor<-col2rgb(someColor)
+    apply(newColor, 2, function(curcoldata){rgb(red=curcoldata[1], green=curcoldata[2],
+                                                blue=curcoldata[3],alpha=alpha, maxColorValue=255)})
+  }
+  
+  # Extract Variance Covariance matrix
+  if (varcov == "default"){
+    covMat = vcov(model)
+  }else{
+    covMat = varcov
+  }
+  
+  # Extract the data frame of the model
+  mod_frame = model.frame(model)
+  
+  # Get coefficients of variables
+  beta_1 = model$coefficients[[effect]]
+  beta_3 = model$coefficients[[interaction]]
+  
+  # Set range of the moderator variable
+  # Minimum
+  if (minimum == "min"){
+    min_val = min(mod_frame[[moderator]])
+  }else{
+    min_val = minimum
+  }
+  # Maximum
+  if (maximum == "max"){
+    max_val = max(mod_frame[[moderator]])
+  }else{
+    max_val = maximum
+  }
+  
+  # Check if minimum smaller than maximum
+  if (min_val > max_val){
+    stop("Error: Minimum moderator value greater than maximum value.")
+  }
+  
+  # Determine intervals between values of the moderator
+  if (incr == "default"){
+    increment = (max_val - min_val)/(num_points - 1)
+  }else{
+    increment = incr
+  }
+  
+  # Create list of moderator values at which marginal effect is evaluated
+  x_2 <- seq(from=min_val, to=max_val, by=increment)
+  
+  # Compute marginal effects
+  delta_1 = beta_1 + beta_3*x_2
+  
+  # Compute variances
+  var_1 = covMat[effect,effect] + (x_2^2)*covMat[interaction, interaction] + 2*x_2*covMat[effect, interaction]
+  
+  # Standard errors
+  se_1 = sqrt(var_1)
+  
+  # Upper and lower confidence bounds
+  z_score = qnorm(1 - ((1 - conf)/2))
+  upper_bound = delta_1 + z_score*se_1
+  lower_bound = delta_1 - z_score*se_1
+  
+  # Determine the bounds of the graphing area
+  max_y = max(upper_bound)
+  min_y = min(lower_bound)
+  
+  # Make the histogram color
+  hist_col = makeTransparent("grey")
+  
+  # Initialize plotting window
+  plot(x=c(), y=c(), ylim=c(min_y, max_y), xlim=c(min_val, max_val), xlab=xlabel, ylab=ylabel, main=title)
+  
+  # Plot estimated effects
+  lines(y=delta_1, x=x_2)
+  lines(y=upper_bound, x=x_2, lty=2)
+  lines(y=lower_bound, x=x_2, lty=2)
+  
+  # Add a dashed horizontal line for zero
+  abline(h=0, lty=3)
+  
+  # Add a vertical line at the mean
+  if (mean){
+    abline(v = mean(mod_frame[[moderator]]), lty=2, col="red")
+  }
+  
+  # Add a vertical line at the median
+  if (median){
+    abline(v = median(mod_frame[[moderator]]), lty=3, col="blue")
+  }
+  
+  # Add Rug plot
+  if (rugplot){
+    rug(mod_frame[[moderator]])
+  }
+  # Add Histogram (Histogram only plots when minimum and maximum are the min/max of the moderator)
+  if (histogram & minimum=="min" & maximum=="max"){
+    par(new=T)
+    hist(mod_frame[[moderator]], axes=F, xlab="", ylab="",main="", border=hist_col, col=hist_col)
+  }
+}
+
+#png(paste0("/home/devvart/Desktop/", "marginal.png"),
+    #width = 2400, height = 1800,
+    #res = 250, type = "cairo-png")
+
+interaction_plot_continuous(reg7, "lag.CDU", "lag.SPD", "lag.CDU:lag.SPD", mean = T,
+                            title = "Marginal impact of CDU vote share on AFD's vote share",
+                            xlabel = "Lagged vote share of SPD",
+                            ylabel = "Impact of lagged CDU vote share on AFD")
+```
 
 
-### Beta regression analysis
 
-... Description of beta regression here ...
+
+
+## Empirical findings from Beta regression analysis
+
+This paper furthermore runs the beta regression analysis since our dependent variable is bounded within 0 to 1. The result is almost same as with the OLS findings expect the size of effects. The final mode (5) of beta regression shows that one percentage increase in unemployment rate leads to .05 percentage increase in AfD's vote share which was .67 in OLS model. However, the result from beta regression provides strong evidence that unemployment, previous vote share of CDU and SPD and Saxony Anhalt, relative to RP, has a positive and statistically significnat effects on AfD's vote share though the magnitude of effect is smaller in compare to OLS findings. This model also seems to be a good model since it explains about 76 percent of the total variation of AfD's vote share. 
 
 ``` {r betareganalysis, echo = F, message = F, results = "asis", error=F}
 betalogit1 <- betareg(vote.AfD.prcnt ~ GDP.capita + unempl.rate + n.refugees, data = Data)
@@ -416,7 +546,7 @@ var_labels <- c('GDP per capita / 1000', 'Unemployment rate', 'Number of refugee
                 'Vote share of CDU in 2011 election',
                 'Vote share of SPD in 2011 election',
                 'Voter turnout in 2011 election',
-                'Abitur ratio', 'No degree ratio', 'state')
+                'Abitur ratio', 'No degree ratio', 'stateBW')
 
 stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
                      omit = 'as.factor*', 
