@@ -7,9 +7,8 @@ date: |
   | Hertie School of Governance
 output: 
   html_document:
-    theme: "united"
+    theme: "cosmo"
     fig_caption: yes
-    toc: yes
     number_sections: yes
 bibliography: Library.bib
 ---
@@ -60,7 +59,7 @@ rm(possible_dir) # remove possible_dir vector
 load("Data.Rda") # Load data file
 ```
 
-![](March2016_State-elections.jpg)
+<img src="March2016_State-elections.jpg" alt="The March 2016 State Elections" style="width: 500px;"/>
 
 # Introduction
 
@@ -82,7 +81,7 @@ We want to understand which structural factors affect the electoral success of t
 Having been founded in February 2013 initially as a eurosceptic party, the AfD just missed the entry into the German national parliament at the federal elections in September 2013 by only 125,000 votes [@schmitt2014euro]. Not a single party in the post-war era was that successful in national elections being only established seven months before [@niedermayer2015neue]. 
 This emergence is attributed to the Euro crisis and chancellor Merkels strong state interventionist austerity politics that opened political potential to the right of the established right wing parties CDU/CSU and FDP. The AfD recognized that potential and positioned itself initially as an expert knowledge based eurosceptic party. But over the last years, it became a new host for now unrepresented national conservatives as well as right wing populists. The unifying factors for these different groups are the anti-establishment attitude of the AfD and the image of being the political underdog who is "honest" in face of political and medial lies. In this regard, the AfD shares similarities to other European right wing populist parties [@hausler2015rechten].
 
-![](AfD_logo.png)
+<img src="AfD_logo.png" alt="The Logo of the AfD" style="width: 500px;"/>
 
 The recent refugee crisis that has hit Europe and especially Germany is seen as a major factor that led to new and increased support for the AfD. Chancellor Angela Merkels slogan "Wir schaffen das", expressing optimism with regards to the capability of government and society to handle the refugee crisis, was mostly criticized by members of the AfD and to some extend from the CDU itself. As long as the refugee crisis persists, it is assumed that the AfD is going to continue to gain more support [@Spiegel2016].After the March elections, a large debate arose within the CDU/CSU whether the refugee crisis response by chancellor Merkel was responsible for the loss in votes for the CDU. Interestingly, leaders of other parties who supported Merkels "Wir schaffen das" experienced less loss of votes. However, left parties such as "Die Linke" seemed to be especially vulnerable to the emergence of the AfD [@Spiegel2016]. Also, the social democrats (SPD) seem to have lost many voters to the AfD [@Zeit2016].
 
@@ -146,7 +145,7 @@ Table 3 shows general descriptive statistics of our variables. Except for the va
 
 The standard deviations for "GDP per capita" and "vote share of Linke" are particularly large in comparison to the respective means. GDP per capita differs substantially between rural districts and heavily urbanized ones and while the Linke is very strong in Saxony Anhalt, it is barely present in BW and RP.
 
-```{r sumstat, echo=F, warning=F, message=F, error=F, results='asis'}
+```{r sumstat, echo=F, warning=F, message=F, error=F, results='asis', fig.align='center'}
 summary_labels <- c('Vote share of AfD in 2016', 'Vote turnout in 2011', 
                     'Vote share of CDU in 2011', 'Vote share of Greens in 2011', 
                     'Vote share of SPD in 2011', 'Vote share of FDP in 2011', 
@@ -156,7 +155,6 @@ summary_labels <- c('Vote share of AfD in 2016', 'Vote turnout in 2011',
 
 stargazer(Data[4:17],
           covariate.labels = summary_labels,
-          font.size = 'tiny',
           title= 'Summary statistics of the covariates',
           type="html", header = FALSE)
 ```
@@ -168,7 +166,7 @@ It is important to note that the AfD vote share is negatively correlated with th
 
 When it comes to IV/IV correlations, the large positive correlation between GDP per capita and the high school degree ratio is not surprising. However, it is interesting to see that the high school degree ratio is negatively correlated with the previous vote share of the CDU, and positively with the unemployment rate.
 
-```{r corr, echo=F, warning=F, message=F, error=F, results='asis'}
+```{r corr, echo=F, warning=F, message=F, error=F, results='asis', fig.align='center'}
 correlation.matrix <- cor(Data[, c("vote.AfD","lag.CDU",
                                    "lag.SPD","GDP.capita",
                                    "unempl.rate",
@@ -184,7 +182,7 @@ stargazer(correlation.matrix,
 ## Distribution of AfD Vote Share
 When lining up the districts according to the vote share of the AfD, it becomes clear that the party achieved an overall stable and even vote share. The only real outliers are a couple of districts in Saxony Anhalt where the AfD achieved it's by far greatest successes.
 
-```{r bar, echo=F, warning=F, message=F, error=F, results='asis', fig.width=13}
+```{r bar, echo=F, warning=F, message=F, error=F, results='asis', fig.width=8, fig.align='center'}
 barplot <- ggplot(Data) +
   geom_bar(aes(y = vote.AfD, 
                x = reorder(district.name, -vote.AfD),
@@ -206,7 +204,7 @@ In the following, we test our hypotheses with simple correlations.
 
 ... Add text ...
 
-``` {r fig1, echo = F, message = F, results = "asis", error=F, fig.height=4}
+``` {r fig1, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
 fig1 <- ggplot2::ggplot(Data, aes(log(x = abitur.ratio), vote.AfD, colour = state)) + 
   xlab("Abitur ratio per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -221,7 +219,7 @@ ggplotly(fig1)
 
 The following graph shows a statistically significant (the t value from the Pearson's product-moment correlation test is 6.27) positive correlation of the logged unemployment rate in a district with the AfD vote share. However, the correlation seems to be negative for districts with lower unemployment rates but becomes strongly positive for districts with high unemployment. The positive correlation of the abitur ratio with the unemployment rate and its negative correlation with the AfD vote share visible in the correlation matrix could offer a possible explanation for this. We will test this later by controlling for urbanization.
 
-``` {r fig2, echo = F, message = F, results = "asis", error=F, fig.height=4}
+``` {r fig2, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
 fig2 <- ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD, colour = state)) + 
   xlab("Unemployment rate per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -236,7 +234,7 @@ ggplotly(fig2)
 
 The result shows a positive correlation of the number of refugees per district with the AfD vote share. But it is not statistically significant since the t value is 0.13 (from the Pearson's product-moment correlation test). Since the data on the refugees per district is from 2013, it is highly outdated. We were not able to acquire more recent data (for 2014 or even for 2015) in order to conduct a meaningful analysis here.
 
-``` {r fig3, echo = F, message = F, results = "asis", error=F, fig.height=4}
+``` {r fig3, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
 fig3 <- ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD, colour = state)) + 
   xlab("Number of refugees per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -250,7 +248,7 @@ ggplotly(fig3)
 ### Correlation of AfD vote share and GDP per capita (H3)
 The following graph shows a slightly statistically significant (t value is -2.04) negative correlation of GDP per capita with AfD vote share. The effect seems to be mostly influenced by a small group of outliers (high vote share, low GDP per capita) and the variance is not equal across the independent variable (posing a problem with heteroscedasticity).
 
-``` {r fig4, echo = F, message = F, results = "asis", error=F, fig.height=4}
+``` {r fig4, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
 fig4 <- ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD, colour = state)) + 
   xlab("GDP per capita per district / 1000 (log)") +
   ylab("AfD vote share (in %)") +
@@ -265,7 +263,7 @@ ggplotly(fig4)
 
 ... Add text here ...
 
-``` {r fig5, echo = F, message = F, results = "asis", error=F, fig.height=4}
+``` {r fig5, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
 fig5 <- ggplot2::ggplot(Data, aes(log(x = lag.turnout), vote.AfD, colour = state)) + 
   xlab("Previous voter turnout per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -280,7 +278,7 @@ ggplotly(fig5)
 
 ... Add text here ...
 
-``` {r fig6, echo = F, message = F, results = "asis", error=F, fig.height=4}
+``` {r fig6, echo = F, message = F, results = "asis", error=F, fig.height=4, fig.align='center'}
 fig6 <- ggplot2::ggplot(Data, aes(log(x = lag.SPD), vote.AfD, colour = state)) + 
         xlab("Previous voteshare of SPD per district (log)") +
         ylab("AfD vote share (in %)") +
@@ -301,7 +299,7 @@ Since the initial descriptive statistics and graphs indicate certain relations a
 Testing some initial regression models, we see that the unemployment rate, the vote share of the SPD in previous elections, and the ratio of people leaving school without a formal degree are statistically significant across all models. In almost each model a one percentage point increase of the unemployment rate leads to a one percentage point increase of the AfD vote share.
 On the other hand, the number of refugees per district and the vote share of the CDU are insignificant in every model.
 
-``` {r regout, echo = F, message = F, results = "asis", error=F}
+``` {r regout, echo = F, message = F, results = "asis", error=F, fig.align='center'}
 reg1 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees, data = Data)
 reg2 <- lm(vote.AfD ~ GDP.capita + unempl.rate + n.refugees + lag.CDU + 
              lag.SPD + lag.turnout, data = Data)
@@ -349,7 +347,7 @@ Data <- reord
 
 ```
 
-```{r interaction, echo=F, warning=F, message=F, results = "asis", error=F}
+```{r interaction, echo=F, warning=F, message=F, results = "asis", error=F, fig.align='center'}
 
 #rega1 <- lm(vote.AfD.prcnt ~ state*unempl.rate, data = Data)
 
@@ -391,7 +389,7 @@ With just a small selection of variables, the models have surprisingly high adju
 
 ... Description of beta regression here ...
 
-``` {r betareganalysis, echo = F, message = F, results = "asis", error=F}
+``` {r betareganalysis, echo = F, message = F, results = "asis", error=F, fig.align='center'}
 betalogit1 <- betareg(vote.AfD.prcnt ~ GDP.capita + unempl.rate + n.refugees, data = Data)
 betalogit2 <- betareg(vote.AfD.prcnt ~ GDP.capita + unempl.rate + n.refugees + lag.CDU + 
              lag.SPD + lag.turnout, data = Data)
@@ -419,7 +417,6 @@ stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
                      covariate.labels = var_labels,
                      label = 'AfD_voteshare',
                      add.lines = list(c('District FE', rep('NO', 5))),
-                     font.size = 'tiny', # make the font tiny
                      float = F, df = F, # add float and df to F
                      type="html", header = F, 
                      no.space = T,
@@ -428,7 +425,7 @@ stargazer::stargazer(betalogit1, betalogit2, betalogit3, betalogit4, betalogit5,
 
 ... What did you do here? Please shortly explain ...
 
-``` {r betareganalyis, echo = F, message = F, results = "asis", error=F}
+``` {r betareganalyis, echo = F, message = F, results = "asis", error=F, fig.align='center'}
 betalogit <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data)
 betaloglog <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data, link = "loglog")
 
@@ -449,15 +446,9 @@ ggplotly(betareg)
 
 ## Limitations and Future Research
 
-- Extend analysis on all state elections in Germany where the AfD has participated in order to increase observations
+There are certain limitations we had to face during our research. Extending the analysis on all state elections in Germany where the AfD has participated would be an improvement for the analysis as it would increase the number of observations. We also could not access the most recent data on the number of refugees that are allocated into the districts in Germany within the last years.
 
-- Access more recent data on refugee numbers
- 
-- Include additional variables, like "immigration"
-
-- Create interaction models 
-
-- Use beta regression as dependent variable is [0, 1] bounded
+When comparing the electoral success of the AfD before the March 2016 state elections with the elections, it becomes clear that external factors such as the refugee crisis have strongly pushed the AfD. Further research on the results of the coming state elections could lead to a better understanding of the trends we observed.
 
 
 ## References
