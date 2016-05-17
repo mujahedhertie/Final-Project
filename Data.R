@@ -3,7 +3,7 @@
 # Collaborative Research Project
 # Creating the Dataset
 # Johannes Schulz-Knappe
-# Update 16 May 2016
+# Update 17 May 2016
 # Hertie School of Governance
 #######################################################################
 
@@ -82,17 +82,15 @@ source("data_cleaning/structural_data_cleaning.R")
 #-----------------------------------------#
 
 # Merge the data into the final data frame
-Data <- merge(data.election, size, "ID")
-Data <- merge(Data, edu, "ID")
-Data <- merge(Data, unemp, "ID")
+Data <- merge(data.election, edu, "ID")
 Data <- merge(Data, gdp, "ID")
+Data <- merge(Data, unemp, "ID")
 Data <- merge(Data, refugee, "ID")
 Data <- merge(Data, debt, "ID")
 Data <- merge(Data, type, "ID")
 
 # Remove used data frames
 rm(data.election)
-rm(size)
 rm(edu)
 rm(unemp)
 rm(gdp)
@@ -101,7 +99,7 @@ rm(debt)
 rm(type)
 
 # Round all variables to 2 digits
-Data[, c(13, 14, 16, 18)] <- round(as.matrix(Data[, c(13, 14, 16, 18)]), digits=2)
+Data[, c(12, 13, 15, 17)] <- round(as.matrix(Data[, c(12, 13, 15, 17)]), digits=2)
 
 # Save Data as file in repository
-save(Data, file = "Data_new.Rda")
+save(Data, file = "Data.Rda")
