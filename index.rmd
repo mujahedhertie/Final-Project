@@ -7,7 +7,6 @@ date: |
   | Hertie School of Governance
 output: 
   html_document:
-    encoding: UTF-8
     theme: "cosmo"
     fig_caption: true
     number_sections: true
@@ -68,16 +67,16 @@ load("Data.Rda") # Load data file
 
 # Introduction
 
-Within less than three years of being founded by discontented members of the incumbent Christian Democratic Union (CDU), the newly-formed party "Alternative for Germany" (AfD) has already achieved extraordinary vote share in the General election of 2013, the European Parliament election of 2014, [@arzheimer2015afd] and lately in the three state elections in Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt held on March 2016. The rise of a party that stands against European Integration, argues for a re-arrangement of Germany's liberal foreign and economic policies, and vows for taking strong measure against immigrants, has presented a novel scenario into understanding factors that drive electorate to vote for a party that seemingly stands against the 'norm of the land'. Thus this research project endeavors to understand the factors that explain the success and rise of AfD in Germany's political landscape. In the following, we present current literature, the selected datasets, our applied methodology, and our findings. All work is done using the software R [@CiteR].
+Within less than three years of being founded by discontented members of the incumbent Christian Democratic Union (CDU), the newly-formed party "Alternative for Germany" (AfD) has already achieved extraordinary vote share in the General election of 2013, the European Parliament election of 2014, [@arzheimer2015afd] and lately in the three state elections in Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt held on March 2016. The rise of a party that stands against European Integration, argues for a re-arrangement of Germany's liberal foreign and economic policies, and vows for taking strong measure against immigrants, has presented a novel scenario into understanding factors that drive electorate to vote for a party that seemingly stands against the 'norm of the land'. Thus this research project endeavors to understand the factors that explain the success and rise of AfD in Germany's political landscape. In the following, we present current literature, the selected datasets, our applied methodology, and our findings. All work is done using the software R [@CiteR].
 
 ## The Research Question
 
-On March 13, 2016, Germany's political landscape experienced "a landslide"[@Zeit2016]. At the three state elections in Bade-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt, the AfD received double digit results from scratch, meaning that it has not been present in the state parliaments before. In Baden-Württemberg (BW), the party received 15.1%, in Rhineland-Palatinate (RP) 12.6%, and in Saxony-Anhalt (SA) even 24.3% [@BWStateOffice; @RPStateOffice; @SAStateOffice], becoming the third strongest party in BW and RP, and the second strongest in SA.
+On March 13, 2016, Germany's political landscape experienced "a landslide"[@Zeit2016]. At the three state elections in Bade-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt, the AfD received double digit results from scratch, meaning that it has not been present in the state parliaments before. In Baden-WÃ¼rttemberg (BW), the party received 15.1%, in Rhineland-Palatinate (RP) 12.6%, and in Saxony-Anhalt (SA) even 24.3% [@BWStateOffice; @RPStateOffice; @SAStateOffice], becoming the third strongest party in BW and RP, and the second strongest in SA.
 Not only does the tremendous success of this new political player harden the setup of the future governments in the respective states, it is also a clear sign that the party has arrived in German mainstream politics [@Spiegel2016].
 
 Our research question is:
 
-*"What explains the recent electoral success of the AfD in the different administrative districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
+*"What explains the recent electoral success of the AfD in the different administrative districts of Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony-Anhalt?"*
 
 We want to understand which structural factors affect the electoral success of the AfD and whether the characteristics of its voters identified in post-election analyses are reflected in the district level data. Also, we want to find out whether it follows the same patterns as the electoral success of radical right populist parties in the rest of Western Europe.
 
@@ -112,7 +111,7 @@ Economic hypothesis
 
 In order to test these hypotheses, we combined two main data types in order to generate our variables.
 
-The first data type is the electoral data provided by the State Offices for Statistics on the last state elections in Baden-Württemberg [@BWStateOffice], Rhineland-Palatinate [@RPStateOffice], and Saxony-Anhalt [@SAStateOffice]. The variables retrieved from these datasets are:
+The first data type is the electoral data provided by the State Offices for Statistics on the last state elections in Baden-WÃ¼rttemberg [@BWStateOffice], Rhineland-Palatinate [@RPStateOffice], and Saxony-Anhalt [@SAStateOffice]. The variables retrieved from these datasets are:
 
 Variable | Name in dataset | Description |
 --------------------|-----------------|-------------------------------|
@@ -186,7 +185,7 @@ barplot <- ggplot(Data) +
                fill = state), 
            stat = "identity") +
   ylab("AfD vote share (in %)") +
-  xlab("Districts of Baden-Württemberg, Rhineland-Palatinate, and Saxony Anhalt") +
+  xlab("Districts of Baden-WÃ¼rttemberg, Rhineland-Palatinate, and Saxony Anhalt") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90))
 
@@ -244,7 +243,7 @@ Since the initial descriptive statistics and graphs indicate certain relations a
 
 ## Empirical findings from ordinary multivariate OLS regression analysis
 
-The results from the base model (1) show that an increase in GDP per capita reduces the vote share of AfD by .08 while one percentage increase in unemployment rate increases the vote share of AfD by 1.05 percentage point. These results are statistically significant. Surprisingly, the findings show that an increase in the number of refugees does not have a statistically significant effect on AfD's vote share. However, our base model does not consider many important variables and thus there is a high possibility of omitted variable bias. Thus, to check the robustness of the findings, this paper adds other covariates in different models shown in the table below. The final model (2) controls for election results variables of other parties in the previous elections and it shows that the vote share of the SPD in 2011 elections and overall voter turnout in the 2011 election  significantly reduce the vote share of the AfD by .20 and .24 percentage points respectively. In model (3), we added the abitur ratio (high school degree) and no degree ratio to the base model and the results show that a one percentage point increase in high school degree reduces the AfD's vote share by .28 percentage point. In model (4), we controlled for public debt and the state variable and the result shows that relative to Rhineland-Palatinate, Baden-Württemberg has negative effects on AfD's vote share by 4.91 unit. Finally, in model (5), we added all the controls to the base model and the result shows that the effect of unemployment on increasing AfD's vote share is consistent across all models. Besides, it shows that one percentage increase in CDU and SPD's vote share in the past election also increases the vote share of AfD though this was not the case in previous models. The result also shows that relative to Rhineland-Palatinate state, Saxony-Anhalt has positive effects on AfD's vote share. Thus based on the findings from the OLS model, we can say that electoral success of AfD is significantly influenced by high unemployment rates. Also, it shows that the effect of Saxony-Anhalt is very strong on AfD's vote share. This model seems to be strong since we see that, with a parsimonious sample size with few controls, the adjusted R^2 is .78 which means about 78 percent of the variation in AfD's vote share is explained by our model. The findings of model (6) and (7) are discriped in the following figures.
+The results from the base model (1) show that an increase in GDP per capita reduces the vote share of AfD by .08 while one percentage increase in unemployment rate increases the vote share of AfD by 1.05 percentage point. These results are statistically significant. Surprisingly, the findings show that an increase in the number of refugees does not have a statistically significant effect on AfD's vote share. However, our base model does not consider many important variables and thus there is a high possibility of omitted variable bias. Thus, to check the robustness of the findings, this paper adds other covariates in different models shown in the table below. The final model (2) controls for election results variables of other parties in the previous elections and it shows that the vote share of the SPD in 2011 elections and overall voter turnout in the 2011 election  significantly reduce the vote share of the AfD by .20 and .24 percentage points respectively. In model (3), we added the abitur ratio (high school degree) and no degree ratio to the base model and the results show that a one percentage point increase in high school degree reduces the AfD's vote share by .28 percentage point. In model (4), we controlled for public debt and the state variable and the result shows that relative to Rhineland-Palatinate, Baden-WÃ¼rttemberg has negative effects on AfD's vote share by 4.91 unit. Finally, in model (5), we added all the controls to the base model and the result shows that the effect of unemployment on increasing AfD's vote share is consistent across all models. Besides, it shows that one percentage increase in CDU and SPD's vote share in the past election also increases the vote share of AfD though this was not the case in previous models. The result also shows that relative to Rhineland-Palatinate state, Saxony-Anhalt has positive effects on AfD's vote share. Thus based on the findings from the OLS model, we can say that electoral success of AfD is significantly influenced by high unemployment rates. Also, it shows that the effect of Saxony-Anhalt is very strong on AfD's vote share. This model seems to be strong since we see that, with a parsimonious sample size with few controls, the adjusted R^2 is .78 which means about 78 percent of the variation in AfD's vote share is explained by our model. The findings of model (6) and (7) are discriped in the following figures.
 
 ``` {r regout, echo = F, message = F, results = "asis", error=F, fig.align='center'}
 Data$state=as.factor(Data$state)
