@@ -23,26 +23,12 @@
 # retrieved from https://www.regionalstatistik.de/genesis/online, as the 
 # Federal Statistical Office does not provide an API.
 
-# We use the data files 171-01-4 (District Size), 192-71-4 (Education), 659-71-4 (Unemployment),
-# 426-71-4 (GDP per Capita), 335-31-4 (Number of Asylum Seekers), and 358-61-4 (Public Debt).
+# We use the data files 192-71-4 (Education), 659-71-4 (Unemployment), 426-71-4 (GDP per Capita), 
+# 335-31-4 (Number of Asylum Seekers), 358-61-4 (Public Debt), and 171-01-4 (District Size).
 # The downloaded csv files are stored under '/data_raw' in the working directory
 
 
-## 2.1 District size
-
-# Table 171-01-4, downloaded on 13/5/2016, selected time = 2014
-
-size_raw <- read.csv("data_raw/171-01-4.csv", 
-                     header = FALSE, 
-                     sep = ";", 
-                     na.strings = c("-","."),
-                     col.names = c("date", "district.ID", "district.name", 
-                                   "space"),
-                     skip = 7,
-                     nrows = 524,
-                     dec=",")
-
-## 2.2 Education
+## 2.1 Education
 
 # Table 192-71-4, downloaded on 13/5
 edu_raw <- read.csv("data_raw/192-71-4.csv", 
@@ -52,6 +38,18 @@ edu_raw <- read.csv("data_raw/192-71-4.csv",
                     skip = 11,
                     nrows = 524,
                     dec=",")
+
+## 2.2 GDP per capita
+
+# Table 426-71-4, downloaded 13/5/2016, selected time = 2013
+
+# Import the csv file
+gdp_raw <- read.csv("data_raw/426-71-4.csv",
+                    header = FALSE, 
+                    sep = ";", 
+                    na.strings = c("-", ".", "..."),
+                    skip = 10,
+                    nrows = 524)
 
 ## 2.3 Unemployment rate
 
@@ -65,19 +63,7 @@ unemp_raw <- read.csv("data_raw/659-71-4.csv",
                       nrows = 533,
                       dec = ",")
 
-## 2.4 GDP per capita
-
-# Table 426-71-4, downloaded 13/5/2016, selected time = 2013
-
-# Import the csv file
-gdp_raw <- read.csv("data_raw/426-71-4.csv",
-                    header = FALSE, 
-                    sep = ";", 
-                    na.strings = c("-", ".", "..."),
-                    skip = 10,
-                    nrows = 524)
-
-## 2.5 Number of asylum seekers
+## 2.4 Number of asylum seekers
 
 # Table 335-31-4, downloaded 13/5/2016, selected time = 2013
 
@@ -90,7 +76,7 @@ refugee_raw <- read.csv("data_raw/335-31-4.csv",
                         nrows = 524,
                         dec = ",")
 
-## 2.6 District public debt
+## 2.5 District public debt
 
 # Table 358-61-4, downloaded 13/5/2016, selected time = 2009
 
@@ -105,3 +91,18 @@ debt_raw <- read.csv("data_raw/358-61-4.csv",
                      skip = 7,
                      nrows = 524,
                      dec = ",")
+
+
+## 2.6 District size
+
+# Table 171-01-4, downloaded on 13/5/2016, selected time = 2014
+
+size_raw <- read.csv("data_raw/171-01-4.csv", 
+                     header = FALSE, 
+                     sep = ";", 
+                     na.strings = c("-","."),
+                     col.names = c("date", "district.ID", "district.name", 
+                                   "space"),
+                     skip = 7,
+                     nrows = 524,
+                     dec=",")

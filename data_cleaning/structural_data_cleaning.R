@@ -19,20 +19,8 @@
 # 2. Cleaning structural data             #
 #-----------------------------------------#
 
-## 2.1 District size
 
-# Delete unnecessary columns
-size <- size_raw[, c(2, 4)]  
-
-# Rename columns
-names(size) <- c("ID", "district.size")
-
-# Convert ID to numeric
-size$ID <- as.numeric(as.character(size$ID)) 
-
-
-
-## 2.2 Education
+## 2.1 Education
 
 # Delete unnecessary columns
 edu <- edu_raw[, c(2, 4, 6, 14)]  
@@ -43,11 +31,11 @@ names(edu) <- c("ID", "school.leaver", "nodegree", "abitur")
 # Convert ID to numeric
 edu$ID <- as.numeric(as.character(edu$ID)) 
 
-# Create nodegree.ratio
-edu$nodegree.ratio <- edu$nodegree/edu$school.leaver*100
-
 # Create abitur.ratio
 edu$abitur.ratio <- edu$abitur/edu$school.leaver*100
+
+# Create nodegree.ratio
+edu$nodegree.ratio <- edu$nodegree/edu$school.leaver*100
 
 # Delete used columns
 edu$nodegree      <- NULL
@@ -56,6 +44,26 @@ edu$school.leaver <- NULL
 
 # Remove raw data from environment
 rm(edu_raw)
+
+
+
+## 2.2 GDP per capita
+
+# Delete unnecessary columns
+gdp <- gdp_raw[, c(2, 6)]
+
+# Rename columns
+names(gdp) <- c("ID", "GDP.capita")
+
+# Convert variables
+gdp$ID <- as.numeric(as.character(gdp$ID))  # Convert ID to numeric 
+gdp$GDP.capita <- as.character(gdp$GDP.capita)  # convert GDP.capita to character
+gdp$GDP.capita <- gsub(",", ".", x = gdp$GDP.capita)  # replace commas with periods
+gdp$GDP.capita <- as.numeric(gdp$GDP.capita)  # convert GDP.capita to numeric
+gdp$GDP.capita <- gdp$GDP.capita/1000 # divide by thousand for better readability
+
+# Remove raw data from environment
+rm(gdp_raw)
 
 
 
@@ -81,27 +89,7 @@ rm(unemp_raw)
 
 
 
-## 2.4 GDP per capita
-
-# Delete unnecessary columns
-gdp <- gdp_raw[, c(2, 6)]
-
-# Rename columns
-names(gdp) <- c("ID", "GDP.capita")
-
-# Convert variables
-gdp$ID <- as.numeric(as.character(gdp$ID))  # Convert ID to numeric 
-gdp$GDP.capita <- as.character(gdp$GDP.capita)  # convert GDP.capita to character
-gdp$GDP.capita <- gsub(",", ".", x = gdp$GDP.capita)  # replace commas with periods
-gdp$GDP.capita <- as.numeric(gdp$GDP.capita)  # convert GDP.capita to numeric
-gdp$GDP.capita <- gdp$GDP.capita/1000 # divide by thousand for better readability
-
-# Remove raw data from environment
-rm(gdp_raw)
-
-
-
-## 2.5 Number of asylum seekers
+## 2.4 Number of asylum seekers
 
 # Keep necessary columns
 refugee <- refugee_raw[, c(2, 4)]
@@ -114,7 +102,7 @@ rm(refugee_raw)
 
 
 
-## 2.6 District public debt
+## 2.5 District public debt
 
 # Keep necessary columns
 debt <- debt_raw[, c(2, 4)]
@@ -130,7 +118,7 @@ rm(debt_raw)
 
 
 
-## 2.7 District type
+## 2.6 District type
 
 # Keep necessary columns
 type <- size_raw[, c(2, 3)]

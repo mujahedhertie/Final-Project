@@ -3,7 +3,7 @@ title: "What Explains the Electoral Success of the AfD?"
 subtitle: "An Analysis of the March 2016 State Elections in Germany"
 author: "Md Mujahedul Islam & Johannes Schulz-Knappe"
 date: |
-  | May 2, 2016
+  | May 17, 2016
   | Hertie School of Governance
 output:
   beamer_presentation:
