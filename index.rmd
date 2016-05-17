@@ -7,9 +7,14 @@ date: |
   | Hertie School of Governance
 output: 
   html_document:
+    encoding: UTF-8
     theme: "cosmo"
-    fig_caption: yes
-    number_sections: yes
+    fig_caption: true
+    number_sections: true
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
 bibliography: Library.bib
 ---
 
