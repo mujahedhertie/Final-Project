@@ -589,17 +589,15 @@ ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
 ```
 
 
-## Limitations and Future Research
+# Limitations and Future Research
 
-- Extend analysis on all state elections in Germany where the AfD has participated in order to increase observations
+One of the limitations of this paper is that it has a parsimonious sample size. Besides the analysis is based only on the three districts of Germany and could not examine all the districts. Furthermore, the structural data on some of the variables particularly number of refugees is not recent. Thus future research could be carried out collecting updated data from all the districts to see what drives the electoral success of AfD. 
 
-- Access more recent data on refugee numbers
- 
-- Include additional variables, like "immigration"
+# Conclusion
 
-- Create interaction models 
+This paper examines factors that lead to the recent electoral success of AfD. One of the novel contributions of this paper is that it uses a newly generated electoral data provided by the State Offices for Statistics and structural data on the administrative districts provided by the Federal Statistical Office DESTATIS. By employing both ordinary OLS and beta regression method using these datasets, this paper finds that increase in unemployment rate is the most evident factor that lead to the recent electoral landslide for the AfD. However, the result on interaction model shows that the effects of unemployment on AfD's success varies depending on districts and this effects are mostly driven by Saxony Anhalt. The result furthermore shows that increase in the vote share of CDU and SPD in the last election also contributed to the AfD's success. However, the result from another interaction model shows that the marginal effects of CDU's vote share on AfD's electoral success actually changes depending on the vote share of SPD.  Though this paper uses a parsimonious sample size and bases its analysis only on the three districts of Germany, the empirical model seems to be strong as it explains more than 70 percent of the total variation of AfD's vote share. However, since this paper could not analyse all the districts, future research could be carried out collecting updated data from all the districts to see what drives the electoral success of AfD and also to see whether effects of unemployment, among others, on AfD's vote is consistent or not.
 
-- Use beta regression as dependent variable is [0, 1] bounded
+
 
 
 ## References {.allowframebreaks}
