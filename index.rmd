@@ -184,7 +184,7 @@ stargazer(correlation.matrix,
 ## Distribution of AfD Vote Share
 When lining up the districts according to the vote share of the AfD, it becomes clear that the party achieved an overall stable and even vote share. The only real outliers are a couple of districts in Saxony Anhalt where the AfD achieved it's by far greatest successes.
 
-```{r bar, echo=F, warning=F, message=F, error=F, results='hide', fig.width=13}
+```{r bar, echo=F, warning=F, message=F, error=F, results='asis', fig.width=13}
 barplot <- ggplot(Data) +
   geom_bar(aes(y = vote.AfD, 
                x = reorder(district.name, -vote.AfD),
@@ -206,7 +206,7 @@ In the following, we test our hypotheses with simple correlations.
 
 ... Add text ...
 
-``` {r fig1, echo = F, message = F, results = "hide", error=F, fig.height=4}
+``` {r fig1, echo = F, message = F, results = "asis", error=F, fig.height=4}
 fig1 <- ggplot2::ggplot(Data, aes(log(x = abitur.ratio), vote.AfD, colour = state)) + 
   xlab("Abitur ratio per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -221,7 +221,7 @@ ggplotly(fig1)
 
 The following graph shows a statistically significant (the t value from the Pearson's product-moment correlation test is 6.27) positive correlation of the logged unemployment rate in a district with the AfD vote share. However, the correlation seems to be negative for districts with lower unemployment rates but becomes strongly positive for districts with high unemployment. The positive correlation of the abitur ratio with the unemployment rate and its negative correlation with the AfD vote share visible in the correlation matrix could offer a possible explanation for this. We will test this later by controlling for urbanization.
 
-``` {r fig2, echo = F, message = F, results = "hide", error=F, fig.height=4}
+``` {r fig2, echo = F, message = F, results = "asis", error=F, fig.height=4}
 fig2 <- ggplot2::ggplot(Data, aes(log(x = unempl.rate), vote.AfD, colour = state)) + 
   xlab("Unemployment rate per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -236,7 +236,7 @@ ggplotly(fig2)
 
 The result shows a positive correlation of the number of refugees per district with the AfD vote share. But it is not statistically significant since the t value is 0.13 (from the Pearson's product-moment correlation test). Since the data on the refugees per district is from 2013, it is highly outdated. We were not able to acquire more recent data (for 2014 or even for 2015) in order to conduct a meaningful analysis here.
 
-``` {r fig3, echo = F, message = F, results = "hide", error=F, fig.height=4}
+``` {r fig3, echo = F, message = F, results = "asis", error=F, fig.height=4}
 fig3 <- ggplot2::ggplot(Data,aes(log(x = n.refugees), vote.AfD, colour = state)) + 
   xlab("Number of refugees per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -250,7 +250,7 @@ ggplotly(fig3)
 ### Correlation of AfD vote share and GDP per capita (H3)
 The following graph shows a slightly statistically significant (t value is -2.04) negative correlation of GDP per capita with AfD vote share. The effect seems to be mostly influenced by a small group of outliers (high vote share, low GDP per capita) and the variance is not equal across the independent variable (posing a problem with heteroscedasticity).
 
-``` {r fig4, echo = F, message = F, results = "hide", error=F, fig.height=4}
+``` {r fig4, echo = F, message = F, results = "asis", error=F, fig.height=4}
 fig4 <- ggplot2::ggplot(Data, aes(log(x = GDP.capita), vote.AfD, colour = state)) + 
   xlab("GDP per capita per district / 1000 (log)") +
   ylab("AfD vote share (in %)") +
@@ -265,7 +265,7 @@ ggplotly(fig4)
 
 ... Add text here ...
 
-``` {r fig5, echo = F, message = F, results = "hide", error=F, fig.height=4}
+``` {r fig5, echo = F, message = F, results = "asis", error=F, fig.height=4}
 fig5 <- ggplot2::ggplot(Data, aes(log(x = lag.turnout), vote.AfD, colour = state)) + 
   xlab("Previous voter turnout per district (log)") +
   ylab("AfD vote share (in %)") +
@@ -280,13 +280,14 @@ ggplotly(fig5)
 
 ... Add text here ...
 
-``` {r fig6, echo = F, message = F, results = "hide", error=F, fig.height=4}
+``` {r fig6, echo = F, message = F, results = "asis", error=F, fig.height=4}
 fig6 <- ggplot2::ggplot(Data, aes(log(x = lag.SPD), vote.AfD, colour = state)) + 
-  xlab("Previous voteshare of SPD per district (log)") +
-  ylab("AfD vote share (in %)") +
-  geom_point(aes(colour = state)) + 
-  geom_smooth() + 
-  theme_bw()
+        xlab("Previous voteshare of SPD per district (log)") +
+        ylab("AfD vote share (in %)") +
+        geom_point(aes(colour = state)) + 
+        geom_smooth() + 
+        theme_bw()
+
 ggplotly(fig6)
 ```
 
@@ -356,24 +357,31 @@ Data$state=as.factor(Data$state)
 rega1 <- lm(vote.AfD.prcnt ~ GDP.capita + state*unempl.rate + state + unempl.rate + n.refugees 
            + lag.CDU + lag.SPD + lag.turnout + abitur.ratio + 
              nodegree.ratio, data = Data)
-summary(rega1)
-Data$predicted=predict(rega1)
-apatheme=theme_bw()+
-  theme(panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank(),
-        panel.border=element_blank(),
-        axis.line=element_line(),
-        text=element_text(family='Times'))
 
-p=ggplot(Data, aes(x=unempl.rate, y=vote.AfD.prcnt, shape=state))+
-geom_point()+
-scale_shape_manual(values=c(1,6,9), name='States', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
-geom_line(aes(x = unempl.rate, y = predicted, linetype=state)) +
-scale_linetype_discrete(name='Districts', labels=c('Rhineland-Palatinate','Baden-Württemberg', 'Saxony-Anhalt'))+
-labs(x = 'Unemployment rate', y = 'Vote share of AfD')+
-apatheme
-p
-#ggsave('scatter1.png', width=6, height=6, unit='in', dpi=300)
+summary(rega1)
+
+Data$predicted=predict(rega1)
+
+apatheme <- theme_bw() +
+            theme(panel.grid.major=element_blank(),
+            panel.grid.minor=element_blank(),
+            panel.border=element_blank(),
+            axis.line=element_line(),
+            text=element_text(family='Times'))
+
+p <- ggplot(Data, aes(x=unempl.rate, y=vote.AfD.prcnt, shape=state)) +
+            geom_point() +
+            scale_shape_manual(values=c(1,6,9), name='States', labels=c('Rhineland-Palatinate', 
+                                                                        'Baden-Württemberg', 
+                                                                        'Saxony-Anhalt')) +
+            geom_line(aes(x = unempl.rate, y = predicted, linetype=state)) +
+            scale_linetype_discrete(name='Districts', labels=c('Rhineland-Palatinate',
+                                                               'Baden-Württemberg', 
+                                                               'Saxony-Anhalt')) +
+            labs(x = 'Unemployment rate', y = 'Vote share of AfD') +
+            apatheme
+
+ggplotly(p)
 ```
 
 With just a small selection of variables, the models have surprisingly high adjusted R^2. Between 40% and 64% of the variation of AfD vote share could be explained. However, this type of analysis (OLS) is not as suited for the analysis of a [0, 1] bounded dependent variable as the following beta regression.
@@ -425,15 +433,15 @@ betalogit <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data)
 betaloglog <- betareg(vote.AfD.prcnt ~ unempl.rate, data = Data, link = "loglog")
 
 betareg <- ggplot(Data, aes(x = unempl.rate, y = vote.AfD.prcnt)) +
-  geom_point(size = 4, shape = 21) +
-  scale_fill_grey() +
-  geom_line(aes(y = predict(betaloglog, Data),
-                colour = "log-log", linetype = "log-log")) +
-  geom_line(aes(y = predict(betalogit, Data), 
-                colour = "logit", linetype = "logit")) +
-  scale_colour_manual("", values = c("red", "blue")) +
-  scale_linetype_manual("", values = c("solid", "dashed")) +
-  theme_bw()
+                  geom_point(size = 4, shape = 21) +
+                  scale_fill_grey() +
+                  geom_line(aes(y = predict(betaloglog, Data),
+                            colour = "log-log", linetype = "log-log")) +
+                  geom_line(aes(y = predict(betalogit, Data), 
+                            colour = "logit", linetype = "logit")) +
+                  scale_colour_manual("", values = c("red", "blue")) +
+                  scale_linetype_manual("", values = c("solid", "dashed")) +
+                  theme_bw()
 
 ggplotly(betareg)
 ```
